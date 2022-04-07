@@ -1,0 +1,227 @@
+<ion-header class="ion-no-border page-header" [ngClass]="{'hide-on-scroll': headerHideOnScroll, 'fixed-on-scroll': headerFixOnScroll}">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+    <!-- <ion-title class="page-header__title" mode="md">My profile</ion-title> -->
+    <ion-buttons slot="end" mode="md">
+      <div *ngIf="!userId; else headerelse" class="pr-ondemand">
+        <span class="pr-ondemand__text">On demand</span>
+        <ion-toggle checked="{{user?.types_employment?.is_on_demand === 1}}" (ionChange)="onDemand($event)" class="ondemand-toggle"></ion-toggle>
+      </div>
+      <ng-template #headerelse>
+        <ion-button>
+          <ion-icon name="share-social-outline"></ion-icon>
+        </ion-button>
+      </ng-template>
+      <!-- <ion-button>
+        <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+      </ion-button> -->
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <div class="ui-profile">
+    <div *ngIf="percent < 100" class="pr-progress progress">
+      <div>{{percent}}% profile completed</div>
+      <ion-progress-bar color="light" value="{{percent / 100}}"></ion-progress-bar>
+    </div>
+    <div class="pr-img">
+      <ion-img (click)="onImageClick(serverImg)"  [src]="serverImg"></ion-img>
+    </div>
+    <div class="pr-info">
+      <h4 class="pr-name">{{user?.name}}</h4>
+      <div class="pr-info-text"><span>Ready to work:</span> {{timeOfJob}}</div>
+      <div class="pr-raiting">
+        <app-rating [rating]="rating" [readOnly]="true"></app-rating>
+      </div>
+      <div class="pr-sum-row">
+      </div>
+    </div>
+  </div>
+
+  <div class="pr-containr">
+    <div class="card card_mb card_first video-wrap">
+      <!-- video -->
+      <div *ngIf="serverVideo" class="video">
+        <video id="video" class="video_" controls preload="auto" [poster]="poster">
+          <source [src]="serverVideo" type="video/mp4">
+        </video>
+      </div>
+      <!-- end: video -->
+    </div>
+
+    <div class="card card_mb">
+      <div class="page-subtitle">About</div>
+      <div class="card-text">
+        <p>{{user.summery}}</p>
+      </div>
+    </div>
+    
+    <div class="card card_mb">
+      <div class="page-subtitle-wrap">
+       <div class="page-subtitle">Experience</div>
+ 
+         <!-- <ion-button (click)="showExpirience = !showExpirience" fill="none" class="page-subtitle-btn">
+          <ion-icon *ngIf="!showExpirience" slot="icon-only" name="add-circle-outline"></ion-icon>
+           <ion-icon *ngIf="showExpirience" slot="icon-only" name="remove-circle-outline"></ion-icon>
+         </ion-button> -->
+      </div>
+       <div class="card-text">
+        <ng-container *ngFor="let pos of user.positions">
+          <div>
+            <span><strong>{{pos.name}}: </strong></span>
+            <span *ngIf="pos.experience; else noExperBlock">
+              <span>{{pos.experience}}</span>
+            </span>
+            <ng-template #noExperBlock>
+              <span>{{pos.from | date}} - </span>
+              <span>{{pos.to | date}}</span>
+            </ng-template>
+          </div>
+        </ng-container>
+       </div>
+     </div>
+
+     <div class="card card_mb">
+      <div class="page-subtitle-wrap">
+       <div class="page-subtitle">Desired positions</div>
+      </div>
+       <div class="card-text">
+        <ng-container *ngFor="let job of user.interesting_jobs">
+          <div>
+            {{job}}
+          </div>
+        </ng-container>
+       </div>
+     </div>
+
+    <app-availabilities *ngIf="availabilities" [title]="'Availability'" [readOnly]="true"
+          [availabilities]="availabilities" (updateAvailability)="updateAvailability()"></app-availabilities>
+
+    <div class="card card_mb">
+       <div class="page-subtitle">Work Locations</div>
+       <div class="card-text">
+         <p><span class="fw-500">City: </span> {{user?.city?.name}}</p>
+         <p *ngIf="user.areas"><span class="fw-500">Neighborhood: </span>
+          <ng-container *ngFor="let area of user.areas">
+            {{area.name}}
+          </ng-container> </p>
+       </div>
+    </div>
+
+    <div class="card card_mb">
+      <div class="page-subtitle">Covid 19</div>
+      <div class="card-text">
+        <p><span class="fw-500">Willing to discuss vaccination status: </span> {{covid}}</p>
+      </div>
+    </div>
+
+    <div class="card card_mb">
+      <div class="page-subtitle-wrap">
+       <div class="page-subtitle">Quizzes</div>
+ 
+         <ion-button (click)="allQuizzes = !allQuizzes" fill="none" class="page-subtitle-btn">
+           <ion-icon *ngIf="!allQuizzes" slot="icon-only" name="arrow-down-circle-outline"></ion-icon>
+           <ion-icon *ngIf="allQuizzes" slot="icon-only" name="remove-circle-outline"></ion-icon>
+         </ion-button>
+      
+      </div>
+       
+       <div class="card-text">
+         <ng-container *ngFor="let quizz of quizzes; let i=index">
+          <p *ngIf="i <= 1 || (i > 1 && allQuizzes)"><span class="fw-500">{{quizz.name}}: </span> to do</p>
+         </ng-container>
+       </div>
+     </div>
+
+     <div class="card card_mb">
+      <div class="page-subtitle-wrap">
+       <div class="page-subtitle">Resume</div>
+      
+      </div>
+       
+       <div *ngIf="resumePath" class="card-btn-group">
+        <ion-button (click)="resumePreview()" color="secondary" mode="md" class="f-btn btn-wide">View</ion-button>
+        <!-- <ion-button (click)="resumeDownload()" color="secondary" mode="md" class="f-btn btn-wide" fill="outline">Download</ion-button> -->
+       </div>
+     </div>
+
+    <div class="card card_mb">
+      <div class="page-subtitle-wrap">
+       <div class="page-subtitle">Certificates / Licenses</div>
+ 
+         <!-- <ion-button fill="none" class="page-subtitle-btn">
+           <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+         </ion-button> -->
+
+         <ion-button (click)="allCertificates = !allCertificates" fill="none" class="page-subtitle-btn">
+          <ion-icon *ngIf="!allCertificates" slot="icon-only" name="arrow-down-circle-outline"></ion-icon>
+          <ion-icon *ngIf="allCertificates" slot="icon-only" name="remove-circle-outline"></ion-icon>
+        </ion-button>
+      
+      </div>
+       
+       <ion-row class="pr-cert-row">
+         <ng-container *ngFor="let cert of user.certificates; let i = index">
+          <ion-col *ngIf="i <= 2 || (i > 1 && allCertificates)" size="4">
+            <ion-img [src]="cert.img"></ion-img>
+            <div class="cert-title">{{cert.name}}</div>
+           </ion-col>
+         </ng-container>
+       </ion-row>
+     </div>
+
+    <div class="card card_mb">
+      <div class="page-subtitle">Social media</div>
+      <div class="card-social">
+        <ion-button *ngIf="user?.facebook" (click)="facebookClick()" fill="none" class="card-social-btn">
+          <ion-icon name="custom-facebook"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="user?.instagram" (click)="instagramClick()" fill="none" class="card-social-btn">
+          <ion-icon name="custom-instagram"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="user?.twitter" (click)="twitterClick()" fill="none" class="card-social-btn">
+          <ion-icon name="custom-twitter"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="footer-buttons">
+    <ion-buttons>
+      <ion-fab-button (click)="messageCandidateModal()">
+        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+        <ion-badge *ngIf="(ds.unreadMessagesNumber | async) > 0" color="danger">{{ds.unreadMessagesNumber | async}}</ion-badge>
+      </ion-fab-button>
+      <ion-fab-button *ngIf="!userId" routerLink="/interviews">
+        <ion-icon name="flash-outline"></ion-icon>
+        <ion-badge *ngIf="(ds.unreadOfferNumber | async) > 0" color="danger">{{ds.unreadOfferNumber | async}}</ion-badge>
+      </ion-fab-button>
+
+      <ng-container *ngIf="userId">
+        <ion-fab-button *ngIf="!user.favorite; else elseBlock" (click)="addToSaved()">
+          <ion-icon name="bookmark-outline"></ion-icon>
+        </ion-fab-button>
+        <ng-template #elseBlock>
+          <ion-fab-button (click)="removeFromSaved()">
+            <ion-icon name="bookmark"></ion-icon>
+          </ion-fab-button>
+        </ng-template>
+        <ion-fab-button (click)="scheduleInterviewModal()">
+          <ion-icon name="alarm-outline"></ion-icon>
+        </ion-fab-button>
+      </ng-container>
+
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

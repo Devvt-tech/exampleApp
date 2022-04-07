@@ -1,0 +1,21 @@
+@import "../../../../theme/_forms";
+
+ion-content {
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+}
+
+.f-form-group {
+    align-items: center;
+    // margin-left: -5px;
+    // margin-right: -5px;
+    .f-acrions {
+        margin-top: 0;
+    }
+}
+
+.cert-upload-preview {
+    border: 1px solid var(--ion-color-light);
+}

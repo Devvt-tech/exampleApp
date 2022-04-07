@@ -1,0 +1,40 @@
+.offers-tabswrap {
+    margin-left: -2px;
+    margin-right: -2px;
+    margin-top: 35px;
+}
+
+.offers-tabs {
+    margin-top: -16px;
+    margin-bottom: 12px;
+    border-radius:  0  0 6px 6px;
+    --background: #fff;
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%), 0 3px 11px -2px rgb(0 0 0 / 10%), 0 1px 5px 0 rgb(0 0 0 / 10%);
+    ion-segment-button {
+        --indicator-color: var(--ion-color-primary);
+        --indicator-box-shadow: none;
+        --margin-bottom: 0;
+        --margin-top: 0;
+        --margin-start: 0;
+        --margin-end: 0;
+        margin: 0;
+        --border-radius: 4px;
+        --border-width: 0;
+        --border-style: none;
+        --color-checked: #fff;
+        --padding-start: 0;
+        --indicator-height: 48px;
+        --padding-bottom: 12px;
+        --padding-top: 12px;
+        --padding-start: 8px;
+        --padding-end: 6px;
+        
+        &:first-child {
+            
+            --border-radius: 0 0 0 4px;
+        }
+        &:last-child {
+            --border-radius: 0 0 4px 0;
+        }
+    }
+}

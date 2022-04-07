@@ -1,0 +1,59 @@
+<ion-header class="ion-no-border simple-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Licenses/certifications/resume</ion-title>
+
+    <ion-buttons slot="end" mode="md">
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="card card_mb">
+    <div class="page-subtitle-wrap">
+     <div class="page-subtitle">Certificates / Licenses</div>
+
+       <!-- <ion-button fill="none" class="page-subtitle-btn">
+         <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+       </ion-button> -->
+
+       <ion-button (click)="allCertificates = !allCertificates" fill="none" class="page-subtitle-btn">
+        <ion-icon *ngIf="!allCertificates" slot="icon-only" name="arrow-down-circle-outline"></ion-icon>
+        <ion-icon *ngIf="allCertificates" slot="icon-only" name="remove-circle-outline"></ion-icon>
+      </ion-button>
+    
+    </div>
+     
+     <ion-row class="pr-cert-row">
+       <ng-container *ngFor="let cert of certificates; let i = index">
+        <ion-col *ngIf="i <= 2 || (i > 1 && allCertificates)" size="4">
+          <ion-img [src]="cert.img"></ion-img>
+          <div class="cert-title">{{cert.name}}</div>
+         </ion-col>
+       </ng-container>
+     </ion-row>
+      <div class="add-position-button">
+        <ion-button (click)="toCertificates('certificate')">Details</ion-button>
+      </div>
+   </div>
+
+   <div class="card card_mb">
+    <div class="page-subtitle-wrap">
+     <div class="page-subtitle">Resume</div>
+    
+    </div>
+     <div *ngIf="resumePath" class="card-btn-group">
+      <ion-button (click)="toCertificates('resume')" color="secondary" mode="md" class="f-btn btn-wide">Details</ion-button>
+     </div>
+   </div>
+
+</ion-content>

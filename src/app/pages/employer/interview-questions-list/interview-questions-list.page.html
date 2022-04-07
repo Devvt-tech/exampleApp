@@ -1,0 +1,58 @@
+<ion-header class="ion-no-border simple-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title mode="md">Interview Questions</ion-title>
+
+    <ion-buttons slot="end" mode="md">
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list class="nav-list">
+    <ion-item button detail="true" class="nav-list__item" routerLink="/interview-questions-page">
+      <div>
+        <div class="nav-list__title">Bartender</div>
+      </div>
+    </ion-item>
+
+    <ion-item button detail="true" class="nav-list__item" routerLink="/interview-questions-page">
+      <div>
+        <div class="nav-list__title">Kitchen manager</div>
+      </div>
+    </ion-item>
+
+    <ion-item button detail="true" class="nav-list__item" routerLink="/interview-questions-page">
+      <div>
+        <div class="nav-list__title">Waiter/waitress</div>
+      </div>
+    </ion-item>
+
+    <ion-item button detail="true" class="nav-list__item" routerLink="/interview-questions-page">
+      <div>
+        <div class="nav-list__title">Sous chef</div>
+      </div>
+    </ion-item>
+
+    <ion-item button detail="true" class="nav-list__item" routerLink="/interview-questions-page">
+      <div>
+        <div class="nav-list__title">Baker</div>
+      </div>
+    </ion-item>
+ 
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="ion-text-center">
+    <ion-button color="primary" mode="md" class="f-btn btn-wide" (click)="addQuestionsList()">Create new questions list</ion-button>
+  </ion-toolbar>
+</ion-footer>

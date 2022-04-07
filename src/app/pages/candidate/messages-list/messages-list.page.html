@@ -1,0 +1,75 @@
+<ion-header class="ion-no-border page-header" [ngClass]="{'hide-on-scroll': headerHideOnScroll, 'fixed-on-scroll': headerFixOnScroll}">
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="!isSearchOpened">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+
+      <ion-title class="page-header__title" mode="md" *ngIf="!isSearchOpened">Messaging</ion-title>
+      
+      <!-- <div class="h-search" *ngIf="isSearchOpened">
+        <ion-buttons slot="start" mode="md" class="h-search__close">
+          <ion-button (click)="closeSearch()">
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-searchbar mode="ios" clearIcon="close-outline" class="h-search__input"></ion-searchbar>
+      </div> -->
+ 
+    <ion-buttons slot="end" mode="md" *ngIf="!isSearchOpened">
+      <!-- <ion-button (click)="openSearch()">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button> -->
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content fullscreen="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <div class="pagehead-bg"></div>
+  
+  <div class="page-content-wrap">
+    <h5 class="page-title">Messaging</h5>
+
+    <div class="page-container">
+      <div class="msg-list-wrap">
+
+        <!-- Messaging list -->
+        <ion-list class="msg-list" mode="md">
+          <div *ngIf="chats && chats.length === 0" class="ion-text-center">
+            No chats yet
+          </div>
+          <ion-item-sliding *ngFor="let chat of chats">
+            <ion-item button class="msg" routerLink="/chat/{{chat.id}}" >
+              <ion-avatar slot="start" class="msg__avatar">
+                <img [src]="chat.icon">
+              </ion-avatar>
+              <div class="msg__content">
+                <h5 class="msg__title">{{chat.name}}</h5>
+                <div class="msg__text">{{chat.last_message.text}}</div>
+              </div>
+              <ion-note slot="end" class="msg__note">
+                <div class="msg__date">{{chat.last_message.prittyDate}}</div>
+                <ion-badge *ngIf="chat.message_number_unread" color="primary" class="msg__badge">{{chat.message_number_unread}}</ion-badge>
+              </ion-note>
+            </ion-item>
+        
+            <ion-item-options side="end">
+              <ion-item-option color="danger">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+        </ion-list>
+        <!-- end: Messaging list -->
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- <app-alert></app-alert> -->

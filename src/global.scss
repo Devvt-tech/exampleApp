@@ -1,0 +1,226 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import "theme/menu";
+@import "theme/common";
+
+@import "theme/lists";
+
+@import "theme/filters";
+
+* {
+    // font-size: 15px;
+    font-size: 14px;
+    
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-size: 14px;
+  }
+  ::-moz-placeholder { /* Firefox 19+ */
+    font-size: 14px;
+  }
+  :-ms-input-placeholder { /* IE 10+ */
+    font-size: 14px;
+  }
+  :-moz-placeholder { /* Firefox 18- */
+    font-size: 14px;
+  }
+
+.ion-color-bluegrey {
+    --ion-color-base: var(--ion-color-bluegrey);
+    --ion-color-base-rgb: var(--ion-color-bluegrey-rgb);
+    --ion-color-contrast: var(--ion-color-bluegrey-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-bluegrey-contrast-rgb);
+    --ion-color-shade: var(--ion-color-bluegrey-shade);
+    --ion-color-tint: var(--ion-color-bluegrey-tint);
+  }
+
+  .alert-radio-group.sc-ion-alert-md, .alert-checkbox-group.sc-ion-alert-md {
+      max-height: unset!important;
+  }
+
+ion-title {
+    font-size: 16px;
+}
+
+ion-button {
+    text-transform: none;
+    letter-spacing: .5px;
+    font-weight: normal;
+    font-size: 14px;
+    --border-radius: 4px;
+    --box-shadow: 0 2px 12px 0 rgb(0,0,0,10%), 0 3px 11px -2px rgb(0,0,0,10%), 0 1px 5px 0 rgb(0,0,0,10%);
+    height: 38px;
+    --border-width: 1px;
+    // --padding-end: 
+    // --padding-start: 
+    // --padding-top: 
+    // --padding-bottom: 
+    &[size="small"] {
+        --padding-top: 8px;
+        --padding-bottom: 7px;
+        height: auto;
+        font-size: 12px;
+        --border-radius: 3px;
+        --box-shadow: 0 2px 10px 0 rgb(0,0,0,10%), 0 3px 9px -2px rgb(0,0,0,10%), 0 0px 1px 0 rgb(0,0,0,10%);
+        &[fill="outline"] {
+            --padding-top: 7px;
+            --padding-bottom: 6px;
+        }
+    }
+}
+
+ion-fab-button {
+    width: 48px;
+    height: 48px;
+    ion-icon {
+        font-size: 24px;
+    }
+}
+
+.alert-title {
+    font-size: 18px!important;
+}
+
+.alert-radio-label {
+    font-size: 15px!important;
+}
+
+ion-radio-group ion-item:last-child {
+    --border-color: transparent;
+}
+
+ion-textarea[autoGrow="true"] textarea {
+    height: auto;
+}
+
+.mb-0 {
+    margin-bottom: 0!important;
+}
+
+.fw-500 {
+    font-weight: 500!important;
+}
+
+.fw-600 {
+    font-weight: 600!important;
+}
+
+.validation-error {
+    color: red;
+    font-size: 12px;
+}
+
+// Calendar
+ion-calendar.calendar {
+    padding: 10px 8px;
+    .title > ion-button {
+        // --background: #000;
+        --box-shadow: none;
+        &.switch-btn {
+            // color: var(--ion-text-color)!important;
+        }
+    }
+    .week-title li {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--ion-color-medium);
+    }
+
+    ion-calendar-week > ion-toolbar {
+        height: auto;
+        --min-height: unset;
+    }
+    button.days-btn {
+        // &:not() {
+            p {
+                color: var(--ion-text-color)!important;
+            }
+        // }
+        &[disabled] {
+            p {
+                opacity: 0.25;
+            }
+        }
+
+        &.last-month-day, &.next-month-day {
+            p {
+                color: rgba(69, 90, 100, 0.4)!important;
+            }
+        }
+        
+        &:not(.today) {
+            p {
+                font-size: 14px!important;
+                
+            }
+        }
+        &.today {
+            p {
+                font-size: 16px;
+                color: var(--ion-color-primary)!important;
+            }
+            
+        }
+        &.on-selected {
+            p {
+                color: #fff!important;
+            }
+        }
+    } 
+    
+    
+
+    .days-box {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0!important;
+        .days {
+            float: none;
+            margin: 0;
+        }
+    }
+    ion-calendar-month-picker .month-packer-item button {
+        color: var(--ion-text-color);
+    }
+}
+
+.interview-count {
+    small {
+        bottom: 2px!important;
+        font-weight: bold!important;
+        //color: inherit!important;
+    }
+}
+
+.alert-radio-label.sc-ion-alert-md {
+    white-space: normal !important;
+  }

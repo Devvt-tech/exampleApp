@@ -1,0 +1,214 @@
+<!-- <ion-header class="ion-no-border"> -->
+  <ion-header class="ion-no-border page-header" [ngClass]="{'hide-on-scroll': headerHideOnScroll, 'fixed-on-scroll': headerFixOnScroll}">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button mode="md" text=""></ion-back-button>
+      </ion-buttons>
+      <ion-title class="page-header__title">Company Profile</ion-title>
+      <ion-buttons slot="end" mode="md">
+        <ion-menu-toggle menu="candidateMenu">
+          <ion-button>
+            <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+          </ion-button>
+        </ion-menu-toggle>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content fullscreen="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+    <div class="pagehead-bg"></div>
+  
+    <div class="page-content-wrap">
+      <h5 class="page-title">Company Profile</h5>
+  
+      <div class="f-wrap">
+        <ion-grid class="f-grid">
+          <ion-row class="f-row f-form-group">
+            <ion-col size="12" class="f-col">
+              <div class="f-label">Photo*</div>
+              <!-- <div class="img_" *ngIf="localImg || serverImg">
+                <ion-img [src]="localImg || serverImg"></ion-img>
+              </div> -->
+              <div class="f-icon-box-row">
+                <div class="f-icon-box ion-activatable" (click)="selectPhoto()">
+                  <ion-icon name="cloud-upload-outline" class="f-icon-box__icon"></ion-icon>
+                  <div class="f-icon-box__text">Upload</div>
+                  <ion-ripple-effect></ion-ripple-effect>
+                </div>
+                <div class="f-icon-box ion-activatable" (click)="takePhoto()">
+                  <ion-icon name="camera-outline" class="f-icon-box__icon"></ion-icon>
+                  <div class="f-icon-box__text">Take photo</div>
+                  <ion-ripple-effect></ion-ripple-effect>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="f-row f-form-group">
+            <ion-col size="12" class="f-col">
+              <div class="f-label">Company Name*</div>
+              <ion-item class="f-input-wrap">
+                <ion-input class="f-input"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+  
+          <ion-row class="f-row">
+            <ion-col size="12" class="f-col">
+              <div class="f-label">Services</div>
+            </ion-col>
+          </ion-row>
+          <div formArrayName="positions">
+            <div>
+              <!-- <app-multiinput></app-multiinput> -->
+              <!-- start: Replace this with <app-multiinput></app-multiinput> -->
+              <ion-row class="f-form-group">
+                <ion-col size="9" class="f-col">
+                  <ion-item formArrayName="positions" class="f-input-wrap">
+                    <ion-input class="f-input"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="3" class="f-col">
+                  <div class="f-acrions">
+                    <ion-button fill="none" class="f-acrions__btn">
+                      <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+                    </ion-button>
+                    <ion-button fill="none" class="f-acrions__btn">
+                      <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+                    </ion-button>
+                  </div>
+                </ion-col>
+              </ion-row>
+
+              <ion-row class="f-form-group">
+                <ion-col size="9" class="f-col">
+                  <ion-item formArrayName="positions" class="f-input-wrap">
+                    <ion-input class="f-input"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="3" class="f-col">
+                  <div class="f-acrions">
+                    <ion-button fill="none" class="f-acrions__btn">
+                      <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+                    </ion-button>
+                    <ion-button fill="none" class="f-acrions__btn">
+                      <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+                    </ion-button>
+                  </div>
+                </ion-col>
+              </ion-row>
+              <div></div>
+              <!-- end: Replace this with <app-multiinput></app-multiinput> -->
+            </div>
+          </div>
+
+          <ion-row class="f-row f-form-group">
+            <ion-col size="12" class="f-col">
+              <div class="f-label">Location</div>
+              <div class="f-pseudo-select ion-activatable">
+                <ion-ripple-effect></ion-ripple-effect>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="f-row">
+            <ion-col size="12" class="f-col">
+              <div class="f-label">Company description*</div>
+              <ion-item class="f-textarea-wrap has-chars-count">
+                <ion-textarea mode="md"></ion-textarea>
+              </ion-item>
+              <div class="chars-count">0 characters from 300</div>
+            </ion-col>
+          </ion-row>
+      
+        </ion-grid>
+      </div>
+
+      <div class="f-wrap">
+        <ion-grid class="f-grid">
+          <ion-row class="f-row f-form-group">
+            <ion-col size="12" class="f-col">
+              <div class="page-subtitle">Operating Hours</div>
+              <ion-button color="bluegrey" mode="md" class="f-btn btn-wide" (click)="operatingHoursModal()">Add</ion-button>
+              <div class="f-text">
+                <div>
+                  <div><b>Monday: </b>
+                    <span>9:00PM - 9:00PM</span>
+                  </div>
+                  <div><b>Tuesday: </b>
+                    <span>9:00PM - 9:00PM</span>
+                  </div>
+                  <div><b>Wednesday: </b>
+                    <span>9:00PM - 9:00PM</span>
+                  </div>
+                  <div><b>Thursday: </b>
+                    <span>9:00PM - 9:00PM</span>
+                  </div>
+                  <div><b>Friday: </b>
+                    <span>9:00PM - 9:00PM</span>
+                  </div>
+                  <div><b>Saturday: </b>
+                    <span>9:00PM - 11:30PM</span>
+                  </div>
+                  <div><b>Sunday: </b>
+                    <span>9:00PM - 11:30PM</span>
+                  </div>
+                </div>
+              </div>
+              
+            </ion-col>
+          </ion-row>
+      
+        </ion-grid>
+      </div>
+    
+
+  
+      <div class="f-wrap">
+        <ion-grid class="f-grid">
+          <ion-row class="f-row">
+            <ion-col size="12" class="f-col">
+              <div class="page-subtitle">Social media</div>
+            </ion-col>
+          </ion-row>
+      
+          <ion-row class="f-row f-form-group">
+            <ion-col size="12" class="f-col f-social-group">
+              <ion-icon name="custom-facebook" class="f-social-icon"></ion-icon>  
+              <ion-item class="f-input-wrap">
+                <ion-input class="f-input" placeholder="Facebook"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+      
+          <ion-row class="f-col f-form-group">
+            <ion-col size="12" class="f-social-group">
+              <ion-icon name="custom-instagram" class="f-social-icon"></ion-icon>  
+              <ion-item class="f-input-wrap">
+                <ion-input class="f-input" placeholder="Instagram"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+      
+          <ion-row class="f-col f-form-group">
+            <ion-col size="12" class="f-social-group">
+              <ion-icon name="custom-twitter" class="f-social-icon"></ion-icon>  
+              <ion-item class="f-input-wrap">
+                <ion-input class="f-input" placeholder="Twitter"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+      
+        </ion-grid>
+      </div>
+  
+    </div>
+    
+  
+  </ion-content>
+  
+  <ion-footer>
+    <ion-toolbar class="ion-text-center">
+      <ion-button (click)="save()" color="primary" mode="md" class="f-btn btn-wide">Save</ion-button>
+    </ion-toolbar>
+  </ion-footer>

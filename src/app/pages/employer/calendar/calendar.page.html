@@ -1,0 +1,63 @@
+<ion-header class="ion-no-border simple-header">
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="!isSearchOpened">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title mode="md" *ngIf="!isSearchOpened"><div class="title-wrap">Calendar</div></ion-title>
+
+    <div [formGroup]="form" class="h-search" *ngIf="isSearchOpened">
+      <ion-buttons slot="start" mode="md" class="h-search__close">
+        <ion-button (click)="closeSearch()">
+          <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-searchbar formControlName="search" (ionChange)="searchChange($event)" debounce="1000" mode="ios" clearIcon="close-outline" class="h-search__input"></ion-searchbar>
+    </div>
+
+    <ion-buttons slot="end" mode="md" *ngIf="!isSearchOpened">
+      <ion-button (click)="openSearch()">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-calendar #calendar [(ngModel)]="date"
+  (change)="onChange($event)"
+  [type]="type"
+  [format]="'YYYY-MM-DD'"
+  [ngClass]="'calendar'"
+  [options]="options"
+  >
+  </ion-calendar>
+
+  <div class="c-list-header">
+    <div class="c-list-title">{{currentFullDate}}</div>
+    <ion-buttons class="c-list-actions" mode="md">
+      <ion-button (click)="sort()">
+        <ion-icon slot="icon-only" [name]="sortASC ? 'custom-sort-down' : 'custom-sort-up'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+  <!--  -->
+  <ion-list class="c-list" mode="md">
+    <ng-container *ngFor="let offer of info">
+      <app-calendar-interview-item [calendarEvent]="offer" (updateInterviewList)="updateInterviewList()"></app-calendar-interview-item>
+    </ng-container>
+  </ion-list>
+  <!--  -->
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="secondary" (click)="addEvent()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

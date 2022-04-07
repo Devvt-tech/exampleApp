@@ -1,0 +1,31 @@
+<ion-header class="ion-no-border simple-header">
+  <ion-toolbar>
+    <ion-title *ngIf="type === 'certificate'">Certificates / Licenses</ion-title>
+    <ion-title *ngIf="type === 'proof'">Proof of licenses</ion-title>
+    <ion-title *ngIf="type === 'safety'">Safety - cpr certified</ion-title>
+    <ion-title *ngIf="type === 'resume'">Resume</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="f-wrap" [formGroup]="form">
+    <ion-grid *ngIf="formArray" formArrayName="array" class="f-grid">
+      <ng-container *ngFor="let elem of formArray.controls; let ind = index">
+        <app-multi-certificate [arrayLength]="formArray.length" [form]="elem" [ind]="ind" [readOnly]="readOnly"
+          [arrayLength]="formArray.length" [isResume]="type === 'resume'" [type]="type" (addItem)="addItem()" (remItem)="remItem($event)"></app-multi-certificate>
+      </ng-container>
+    </ion-grid>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="ion-text-center">
+    <ion-button *ngIf="!readOnly" [disabled]="form.invalid" color="primary" mode="md" class="f-btn btn-wide" (click)="save()">Save</ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,28 @@
+@import "../../../../theme/_forms";
+@import "../../../../theme/_modals";
+
+ion-content {
+    --padding-top: 24px;
+    --padding-bottom: 24px;
+    --padding-start: 0;
+    --padding-end: 0;
+}
+
+.pos-info-wrap {
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-bottom: 24px;
+}
+
+.job-info {
+    p {
+        margin: 0 0 8px;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.c-raiting-sm {
+    margin-top: 4px;
+}

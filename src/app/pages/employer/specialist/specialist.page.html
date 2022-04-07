@@ -1,0 +1,183 @@
+<ion-header class="ion-no-border page-header" [ngClass]="{'hide-on-scroll': headerHideOnScroll, 'fixed-on-scroll': headerFixOnScroll}">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title class="page-header__title" mode="md">John Doe</ion-title>
+    <ion-buttons slot="end" mode="md">
+      <ion-button (click)="bookmark()">
+        <ion-icon slot="icon-only" [name]="isBookmark ? 'bookmark' : 'bookmark-outline'"></ion-icon>
+      </ion-button>
+
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <div class="ui-profile">
+    <div class="pr-img">
+      <ion-img [src]="'/assets/img/demo/avatar.jpg'"></ion-img>
+    </div>
+    <div class="pr-info">
+      <h4 class="pr-name">John Doe</h4>
+      <div class="pr-info-pos">Restaurant Manager</div>
+      <div class="pr-raiting">
+        <div class="c-raiting">
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+        </div>
+      </div>
+      <div class="pr-info-text"><span>Ready to work:</span> part time</div>
+      <!-- <div class="pr-sum-row">
+        <div class="pr-sum-col pr-sum-col_left">
+          <div class="pr-sum-col__inner">
+            <div class="pr-sum-title">Experience:</div>
+            <div class="pr-sum-text">2 years</div>
+          </div>
+        </div>
+        <div class="pr-sum-col pr-sum-col_right">
+          <div class="pr-sum-col__inner">
+            <div class="pr-sum-title">Ready to work:</div>
+            <div class="pr-sum-text">Part time</div>
+          </div>
+        </div>
+      </div> -->
+      
+    </div>
+    
+  </div>
+
+  <div class="pr-containr">
+
+
+    <div class="card card_mb card_first video-wrap">
+      <!-- video -->
+      <div class="video">
+        <ion-img class="video__img" src="./assets/img/demo/video.jpg"></ion-img>
+        <ion-button class="video__play" fill="clear">
+          <ion-icon slot="icon-only" name="play-circle-outline"></ion-icon>
+        </ion-button>
+      </div>
+      <!-- end: video -->
+    </div>
+
+    <div class="card card_mb">
+      <div class="page-subtitle">About</div>
+      <div class="card-text">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum neque auctor sit posuere vivamus. Donec risus sed ac auctor ac nisi. Id morbi ut gravida duis lorem mollis cursus. Nibh id et fames gravida feugiat sit in quam. Sagittis aliquet pretium, tincidunt mattis diam habitant in.</p>
+      </div>
+    </div>
+
+   <div class="card card_mb">
+      <div class="page-subtitle">Availability</div>
+      
+      <div class="card-text">
+        <p><span class="fw-500">Monday: </span><span class="no-wrap card-text-sm">8:00AM - 12:00AM</span>, <span class="no-wrap card-text-sm">4:00PM - 10:00PM</span></p>
+        <p><span class="fw-500">Tuesday: </span><span class="no-wrap card-text-sm">8:00AM - 5:00AM</span></p>
+        <p><span class="fw-500">Wednesday: </span><span class="no-wrap card-text-sm">8:00AM - 5:00AM</span></p>
+      </div>
+    </div>
+
+    <div class="card card_mb">
+       <div class="page-subtitle">Work Locations</div>
+       <div class="card-text">
+         <p><span class="fw-500">City: </span> New York</p>
+         <p><span class="fw-500">Neighborhood: </span> Bayonne, Fort Lee </p>
+       </div>
+    </div>
+
+    <div class="card card_mb">
+      <div class="page-subtitle">Covid 19</div>
+      <div class="card-text">
+        <p><span class="fw-500">Willing to discuss vaccination status: </span> Yes</p>
+      </div>
+    </div>
+
+    <div class="card card_mb">
+      
+       <div class="page-subtitle">Candidate assessments</div>
+
+       
+       <div class="card-text">
+         <p><span class="fw-500">Quiz name1: </span> 80%</p>
+         <p><span class="fw-500">Quiz name2: </span> 87.5%</p>
+       </div>
+     </div>
+
+     <div class="card card_mb">
+
+       <div class="page-subtitle">Resume</div>
+ 
+      
+       
+       <div class="card-btn-group">
+        <ion-button color="secondary" mode="md" class="f-btn btn-wide">Preview</ion-button>
+        <ion-button color="secondary" mode="md" class="f-btn btn-wide" fill="outline">Download</ion-button>
+       </div>
+     </div>
+
+    <div class="card card_mb">
+      
+       <div class="page-subtitle">Certificates / Licenses</div>
+       
+       <ion-row class="pr-cert-row">
+         <ion-col size="4">
+          <ion-img [src]="'./assets/img/demo/document.png'"></ion-img>
+          <div class="cert-title">CPR/FirstAid</div>
+         </ion-col>
+         <ion-col size="4">
+          <ion-img [src]="'./assets/img/demo/document.png'"></ion-img>
+          <div class="cert-title">Bartender</div>
+         </ion-col>
+         <ion-col size="4">
+          <ion-img [src]="'./assets/img/demo/document.png'"></ion-img>
+          <div class="cert-title">Food Handler</div>
+         </ion-col>
+         <ion-col size="4">
+          <ion-img [src]="'./assets/img/demo/document.png'"></ion-img>
+          <div class="cert-title">Other</div>
+         </ion-col>
+       </ion-row>
+     </div>
+
+    <div class="card card_mb">
+      <div class="page-subtitle">Social media</div>
+      <div class="card-social">
+        <ion-button fill="none" class="card-social-btn">
+          <ion-icon name="custom-facebook"></ion-icon>
+        </ion-button>
+        <ion-button fill="none" class="card-social-btn">
+          <ion-icon name="custom-instagram"></ion-icon>
+        </ion-button>
+        <ion-button fill="none" class="card-social-btn">
+          <ion-icon name="custom-twitter"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="footer-buttons">
+    <ion-button color="primary" mode="md" class="f-btn btn-wide" (click)="makeOfferModal()">Contact candidate</ion-button>
+  </ion-toolbar>
+</ion-footer>

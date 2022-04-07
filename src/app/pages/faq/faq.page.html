@@ -1,0 +1,35 @@
+<ion-header class="ion-no-border simple-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title mode="md">FAQ</ion-title>
+
+    <ion-buttons slot="end" mode="md">
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list class="nav-list">
+    <ion-item *ngFor="let question of questions" button detail="true" class="nav-list__item" (click)="onClick(question)">
+      <div>
+        <div [innerHTML]="question.title" class="nav-list__title"></div>
+        <div [innerHTML]="question.text"></div>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer>
+
+<ion-toolbar class="ion-text-center">
+  <div><span class="label-sm-muted fw-500">Still have a question, contact us here.</span></div>
+  <ion-button color="primary" mode="md" class="f-btn btn-wide" (click)="contactUsModal()">Contact Us</ion-button>
+</ion-toolbar>
+</ion-footer>

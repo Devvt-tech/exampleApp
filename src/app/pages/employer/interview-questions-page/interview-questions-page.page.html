@@ -1,0 +1,73 @@
+<ion-header class="ion-no-border simple-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title mode="md"><div class="title-wrap">Bartender</div></ion-title>
+    <ion-buttons slot="end" mode="md">
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true" [scrollEvents]="true" #content>
+ 
+    <ion-grid class="f-grid">
+      <ion-row class="f-row f-form-group" *ngFor="let question of questionsList; let i = index">
+        <ion-col size="9" class="f-col" *ngIf="!isEditingQuestion[i]">
+          <div class="fw-500">{{i+1}}. {{question.text}}</div>
+        </ion-col>
+        <ion-col size="3" class="f-col" *ngIf="!isEditingQuestion[i]">
+          <div class="f-acrions">
+            <ion-button fill="none" class="f-acrions__btn" (click)="edit(i)">
+              <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button fill="none" class="f-acrions__btn">
+              <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-col>
+        <ion-col size="12" class="f-col" *ngIf="isEditingQuestion[i]">
+          <div class="fw-500">
+            {{i+1}}.
+          </div>
+          <ion-item class="f-textarea-wrap">
+            <ion-textarea mode="md" rows="4" value="{{question.text}}"></ion-textarea>
+          </ion-item>
+          <div class="new-question-buttons">
+            <ion-button color="primary" mode="md" size="small" class="f-btn" (click)="editClose(i)">Save</ion-button>
+            <ion-button color="danger" fill="outline" size="small" mode="md" class="f-btn" (click)="editClose(i)">Cancel</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <div >
+        <ion-row class="f-row f-form-group" id="newQuestionInput" *ngIf="addQuestionInput">
+          <ion-col size="12" class="f-col">
+            <ion-item class="f-textarea-wrap">
+              <ion-textarea mode="md"></ion-textarea>
+            </ion-item>
+            <div class="new-question-buttons">
+              <ion-button color="primary" mode="md" size="small" class="f-btn" (click)="addQuestionClose()">Save</ion-button>
+              <ion-button color="danger" fill="outline" size="small" mode="md" class="f-btn" (click)="addQuestionClose()">Cancel</ion-button>
+              
+            </div>
+          </ion-col>
+        </ion-row>
+      </div>
+      
+
+    </ion-grid>
+ 
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="ion-text-center">
+    <ion-button color="primary" mode="md" class="f-btn btn-wide" (click)="addQuestion()">Add new question</ion-button>
+  </ion-toolbar>
+</ion-footer>

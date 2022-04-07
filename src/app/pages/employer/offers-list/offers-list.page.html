@@ -1,0 +1,345 @@
+<ion-header class="ion-no-border page-header" [ngClass]="{'hide-on-scroll': headerHideOnScroll, 'fixed-on-scroll': headerFixOnScroll}">
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="!isSearchOpened">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+
+      <ion-title class="page-header__title" mode="md" *ngIf="!isSearchOpened">Job offers</ion-title>
+
+      <div class="h-search" *ngIf="isSearchOpened">
+        <ion-buttons slot="start" mode="md" class="h-search__close">
+          <ion-button (click)="closeSearch()">
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-searchbar (ionChange)="searchChange($event)" debounce="1000" mode="ios" clearIcon="close-outline" class="h-search__input"></ion-searchbar>
+      </div>
+ 
+    <ion-buttons slot="end" mode="md" *ngIf="!isSearchOpened">
+      <div class="res-filter-wrap">
+        <div class="res-filter-count">{{filtersCount}}</div>
+        <ion-button (click)="openFilter()">
+          <ion-icon slot="icon-only" name="options"></ion-icon>
+        </ion-button>
+      </div>
+      
+      <ion-button (click)="openSearch()">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content fullscreen="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <div class="pagehead-bg"></div>
+  
+  <div class="page-content-wrap">
+    <h5 class="page-title">Job offers</h5>
+
+    <div class="page-container">
+      <div class="page-list-wrap">
+        <!-- <p class="ion-text-center">You haven't made any offers yet</p> -->
+
+        <!-- Offers list -->
+        <ion-list class="c-list" mode="md">
+          <ion-item-sliding *ngFor="let offer of offers">
+            <ion-item class="c-list-item">
+              <ion-avatar *ngIf="offer.to.image" slot="start" class="c-list-item__avatar">
+                <img [src]="offer.to.image">
+              </ion-avatar>
+              <div class="c-list-item__content">
+                <div class="c-list-item__header has-buttons">
+                  <div (click)="viewOffer(offer)">
+                    <div>{{offer.prittyDateTime}}</div>
+                    <h5 class="c-list-item__title">{{offer.to.name}}</h5>
+                    <div class="c-raiting-sm">
+                      <app-rating [rating]="offer.candidate_rating_total" [readOnly]="true"></app-rating>
+                    </div>
+                    
+                    <div class="c-list-item__info">{{offer.jobName}}</div>
+                  </div>
+
+                  <ion-buttons class="c-list-item__buttons position-absolute">
+                    <!-- TODO -->
+                    <!-- <ion-button routerLink="/chat">
+                      <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
+                    </ion-button> -->
+                    <ion-button (click)="offerSentActions($event, offer.to.id, offer)" class="btn-ellipsis-vertical">
+                      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                </div>
+                
+                <div class="c-list-item__info-secondary">{{offer.expirienceText}}</div>
+                <div class="c-list-item__info">
+                  Offer status: 
+                  <ion-chip color="{{offer.statusColor}}" class="c-list-item__status">
+                    <ion-label>{{offer.status}}</ion-label>
+                  </ion-chip>
+                </div>
+                <ion-button *ngIf="offer.status !== 'Expired'" (click)="cancelClick(offer.id)" size="small"  color="secondary" fill="outline" class="c-list-item__btn">Cancel interivew</ion-button>
+              </div>
+              
+            </ion-item>
+
+            <ion-item-options side="end">
+              <ion-item-option color="danger">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+          <!-- -----------------------------
+
+          <ion-item-sliding>
+            <ion-item class="c-list-item">
+              <ion-avatar slot="start" class="c-list-item__avatar">
+                <img src="./assets/img/demo/avatar6.jpg">
+              </ion-avatar>
+              <div class="c-list-item__content">
+                <div class="c-list-item__header has-buttons">
+                  <div>
+                    <h5 class="c-list-item__title" routerLink="/specialist">Jane Doe</h5>
+                    <div class="c-raiting-sm">
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                    </div>
+                    
+                    <div class="c-list-item__info">Restaurant Manager</div>
+                  </div>
+
+                  <ion-buttons class="c-list-item__buttons position-absolute">
+                    <ion-button routerLink="/chat">
+                      <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
+                    </ion-button>
+                    <ion-button (click)="offerSentActions($event)" class="btn-ellipsis-vertical">
+                      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                </div>
+                
+                <div class="c-list-item__info-secondary">2 years · New York City, USA</div>
+                <div class="c-list-item__info">
+                  Offer status: 
+                  <ion-chip color="success" class="c-list-item__status">
+                    <ion-label>Active</ion-label>
+                </ion-chip>
+              </div>
+                
+                <ion-button size="small"  color="secondary" fill="outline" class="c-list-item__btn">Cancel</ion-button>
+              </div>
+              
+            </ion-item>
+
+            <ion-item-options side="end">
+              <ion-item-option color="danger">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+          <ion-item-sliding>
+            <ion-item class="c-list-item">
+              
+              <ion-avatar slot="start" class="c-list-item__avatar">
+                <img src="./assets/img/demo/avatar.jpg">
+              </ion-avatar>
+              <div class="c-list-item__content">
+                <div class="c-list-item__header has-buttons">
+                  <div>
+                    <h5 class="c-list-item__title" routerLink="/specialist">John Doe</h5>
+                    <div class="c-raiting-sm">
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                    </div>
+                    
+                    <div class="c-list-item__info">Restaurant Manager</div>
+                  </div>
+
+                  <ion-buttons class="c-list-item__buttons position-absolute">
+                    <ion-button routerLink="/chat">
+                      <ion-icon slot="icon-only" name="mail-unread-outline"></ion-icon>
+                    </ion-button>
+                    <ion-button (click)="offerSentActions($event)" class="btn-ellipsis-vertical">
+                      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                </div>
+                
+                <div class="c-list-item__info-secondary">2 years · New York City, USA</div>
+                <div class="c-list-item__info">
+                  Offer status: 
+                  <ion-chip color="primary" class="c-list-item__status">
+                    <ion-label>Accepted</ion-label>
+                </ion-chip>
+              </div>
+                
+                <ion-button size="small"  color="primary" class="c-list-item__btn">Schedule interview</ion-button>
+              </div>
+              
+            </ion-item>
+
+            <ion-item-options side="end">
+              <ion-item-option color="danger">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+          <ion-item-sliding>
+            <ion-item class="c-list-item">
+              
+              <ion-avatar slot="start" class="c-list-item__avatar">
+                <img src="./assets/img/demo/avatar.jpg">
+              </ion-avatar>
+              <div class="c-list-item__content">
+                <div class="c-list-item__header has-buttons">
+                  <div>
+                    <h5 class="c-list-item__title" routerLink="/specialist">Tomas Sample</h5>
+                    <div class="c-raiting-sm">
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star-outline"></ion-icon>
+                      </div>
+                    </div>
+                    
+                    <div class="c-list-item__info">Restaurant Manager</div>
+                  </div>
+
+                  <ion-buttons class="c-list-item__buttons position-absolute">
+                    <ion-button routerLink="/chat">
+                      <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
+                    </ion-button>
+                    <ion-button (click)="offerSentActions($event)" class="btn-ellipsis-vertical">
+                      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                </div>
+                
+                <div class="c-list-item__info-secondary">2 years · New York City, USA</div>
+                <div class="c-list-item__info">
+                  Offer status: 
+                  <ion-chip color="danger" class="c-list-item__status">
+                    <ion-label>Canceled</ion-label>
+                  </ion-chip>
+                </div>
+              </div>
+            
+            </ion-item>
+
+            <ion-item-options side="end">
+              <ion-item-option color="danger">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+          <ion-item-sliding>
+            <ion-item class="c-list-item c-list-item_archive">
+              
+              <ion-avatar slot="start" class="c-list-item__avatar">
+                <img src="./assets/img/demo/avatar.jpg">
+              </ion-avatar>
+              <div class="c-list-item__content">
+                <div class="c-list-item__header has-buttons">
+                  <div>
+                    <h5 class="c-list-item__title" routerLink="/specialist">John Smith</h5>
+                    <div class="c-raiting-sm">
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                      <div class="raiting-icon-wrap">
+                        <ion-icon class="raiting-icon" name="star"></ion-icon>
+                      </div>
+                    </div>
+                    
+                    <div class="c-list-item__info">Restaurant Manager</div>
+                  </div>
+
+                  <ion-buttons class="c-list-item__buttons position-absolute">
+                    <ion-button routerLink="/chat">
+                      <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
+                    </ion-button>
+                    <ion-button (click)="offerSentActions($event)" class="btn-ellipsis-vertical">
+                      <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                </div>
+
+                <div class="c-list-item__info-secondary">2 years · New York City, USA</div>
+                <div class="c-list-item__info">
+                  Offer status: 
+                  <ion-chip color="medium" class="c-list-item__status">
+                    <ion-label>Archive</ion-label>
+                  </ion-chip>
+                </div>
+
+              </div>
+              
+            </ion-item>
+
+            <ion-item-options side="end">
+              <ion-item-option color="danger">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding> -->
+
+        </ion-list>
+        <!-- end: Offers list -->
+      </div>
+    </div>
+
+  </div>
+</ion-content>

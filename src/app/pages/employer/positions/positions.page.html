@@ -1,0 +1,91 @@
+<ion-header class="ion-no-border page-header" [ngClass]="{'hide-on-scroll': headerHideOnScroll, 'fixed-on-scroll': headerFixOnScroll}">
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="!isSearchOpened">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+
+      <ion-title class="page-header__title" mode="md" *ngIf="!isSearchOpened">Positions</ion-title>
+
+      <div class="h-search" *ngIf="isSearchOpened">
+        <ion-buttons slot="start" mode="md" class="h-search__close">
+          <ion-button (click)="closeSearch()">
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-searchbar mode="ios" clearIcon="close-outline" class="h-search__input"></ion-searchbar>
+      </div>
+ 
+    <ion-buttons slot="end" mode="md" *ngIf="!isSearchOpened">
+      <ion-button (click)="openSearch()">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content fullscreen="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <div class="pagehead-bg"></div>
+  
+  <div class="page-content-wrap">
+    <h5 class="page-title">Positions</h5>
+
+    <div class="page-container">
+      <div class="page-list-wrap">
+        <!-- <p class="ion-text-center">You haven't added any positions yet</p> -->
+
+        <!-- Positions list -->
+        <ion-list class="c-list" mode="md">
+          <ion-item-sliding *ngFor="let vac of vacancies">
+            <ion-item button class="c-list-item">
+              <ion-col size="5">
+                <div class="c-list-item__content" (click)="toVacancy(vac)">
+                  <h5 class="c-list-item__title">{{vac.job.name}}</h5>
+                  <div class="c-list-item__info">
+                    Status: 
+                    <ion-chip color="{{vac.statusColor}}" class="c-list-item__status">
+                      <ion-label>{{vac.status}}</ion-label>
+                    </ion-chip>
+                  </div>
+                </div>
+              </ion-col>
+
+              <div class="c-list-item__content">
+                <h5 class="c-list-item__title">{{vac?.city?.name}}</h5>
+                <span *ngFor="let ar of vac.areas" class="">
+                  <span> </span> {{ar.name}}
+                </span>
+              </div>
+
+              <ion-buttons slot="end" class="c-list-item__buttons">
+                <ion-button class="btn-ellipsis-vertical" (click)="positionActionsPopover($event, vac)">
+                  <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+        
+            <!-- <ion-item-options side="end">
+              <ion-item-option color="danger">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options> -->
+          </ion-item-sliding>
+        </ion-list>
+        <!-- end: Positions list -->
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- <app-alert></app-alert> -->
+
+<ion-footer>
+  <ion-toolbar *ngIf="isCompany" class="footer-buttons">
+    <ion-button color="primary" mode="md" class="f-btn btn-wide" (click)="addPositionModal()">Add New Position</ion-button>
+  </ion-toolbar>
+</ion-footer>

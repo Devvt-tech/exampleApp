@@ -1,0 +1,114 @@
+<ion-header class="ion-no-border page-header" [ngClass]="{'hide-on-scroll': headerHideOnScroll, 'fixed-on-scroll': headerFixOnScroll}">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title class="page-header__title" mode="md">Company name</ion-title>
+    <ion-buttons slot="end" mode="md">
+
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <div class="ui-profile">
+    <div class="pr-img">
+      <ion-img (click)="onImageClick(user?.image)" [src]="user?.image"></ion-img>
+    </div>
+    <div class="pr-info">
+      <h4 class="pr-name">{{user.name}}</h4>
+      <!-- <div class="pr-info-services">Service 1, Service 2, Service 3</div> -->
+      <div class="pr-raiting">
+        <div class="c-raiting">
+          <app-rating [rating]="rating" [readOnly]="true"></app-rating>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  <div class="pr-containr">
+    <div class="card card_mb card_first">
+      <!-- <div class="page-subtitle">Services</div>
+      
+      <div class="card-text">
+        <p>Service 1, Service 2, Service 3</p>
+      </div> -->
+
+      <div class="page-subtitle">About</div>
+      <div class="card-text">
+        <p>{{user.summery}}</p>
+      </div>
+    </div>
+
+    <div class="card card_mb">
+      <div class="page-subtitle">Locations</div>
+      <div class="card-text">
+        <p><strong>City: </strong>{{user.city?.name}}</p>
+        <p *ngIf="user.areas"><span class="fw-500">Neighborhood: </span>
+        <ng-container *ngFor="let area of user.areas">
+          {{area.name}}
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="card card_mb">
+      <div class="page-subtitle">Addresses</div>
+      <div class="card-text">
+        <ion-list class="c-list" mode="md">
+          <ng-container *ngFor="let address of addresses">
+            <app-address-list-item [showActions]="false" [address]="address"></app-address-list-item>
+          </ng-container>
+        </ion-list>
+      </div>
+    </div>
+
+
+
+
+
+    <app-availabilities *ngIf="availabilities" [title]="'Operating Hours'" [availabilities]="availabilities" (updateAvailability)="updateAvailability()"></app-availabilities>
+
+    <div class="card card_mb">
+      <div class="page-subtitle">Social media</div>
+      <div class="card-social">
+        <ion-button *ngIf="user?.facebook" (click)="facebookClick()" fill="none" class="card-social-btn">
+          <ion-icon name="custom-facebook"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="user?.instagram" (click)="instagramClick()" fill="none" class="card-social-btn">
+          <ion-icon name="custom-instagram"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="user?.twitter" (click)="twitterClick()" fill="none" class="card-social-btn">
+          <ion-icon name="custom-twitter"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="footer-buttons">
+
+    <ion-buttons>
+      <ion-fab-button routerLink="/messages-list">
+        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+        <ion-badge *ngIf="(ds.unreadMessagesNumber | async) > 0" color="danger">{{ds.unreadMessagesNumber | async}}</ion-badge>
+      </ion-fab-button>
+      <ion-fab-button routerLink="/interviews">
+        <ion-icon name="folder-open-outline"></ion-icon>
+        <ion-badge *ngIf="(ds.unreadOfferNumber | async) > 0" color="danger">{{ds.unreadOfferNumber | async}}</ion-badge>
+      </ion-fab-button>
+      <ion-fab-button routerLink="/interviews">
+        <ion-icon name="flash-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,74 @@
+<ion-header class="ion-no-border simple-header">
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="!isSearchOpened">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title mode="md" *ngIf="!isSearchOpened"><div class="title-wrap">Interviews list</div></ion-title>
+
+    <div [formGroup]="form" class="h-search" *ngIf="isSearchOpened">
+      <ion-buttons slot="start" mode="md" class="h-search__close">
+        <ion-button (click)="closeSearch()">
+          <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-searchbar formControlName="search" (ionChange)="searchChange($event)" debounce="1000" mode="ios" clearIcon="close-outline" class="h-search__input"></ion-searchbar>
+    </div>
+
+    <ion-buttons slot="end" mode="md" *ngIf="!isSearchOpened">
+      <ion-button (click)="openSearch()">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+  <div class="dates-range">
+    <span>from: {{prittyStartDate}}</span>
+    <span>to: {{prittyEndDate}}</span>
+  </div>
+  
+</ion-header>
+<ion-content>
+  <div class="offers-tabswrap">
+    <ion-segment (ionChange)="segmentChanged($event)" class="offers-tabs" mode="ios">
+      <ion-segment-button value="past">
+        <ion-label>Past</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="future">
+        <ion-label>Upcoming</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+
+  <!-- <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher> -->
+
+  <div class="c-list-header">
+    <div class="c-list-title">{{currentFullDate}}</div>
+    <ion-buttons class="c-list-actions">
+      <ion-button (click)="sort()" mode="md">
+        <ion-icon slot="icon-only" [name]="sortASC ? 'custom-sort-down' : 'custom-sort-up'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+  <!--  -->
+  <ion-list class="c-list" mode="md">
+    <ng-container *ngFor="let offer of info; let i = index">
+      <app-calendar-interview-item [calendarEvent]="offer"></app-calendar-interview-item>
+    </ng-container>
+    <ion-item-divider></ion-item-divider>
+  </ion-list>
+
+  
+</ion-content>
+<ion-footer>
+  <ion-toolbar class="ion-text-center">
+    <ion-button (click)="loadMoreClick()" color="primary" mode="md" class="f-btn btn-wide">Load more...</ion-button>
+  </ion-toolbar>
+</ion-footer>

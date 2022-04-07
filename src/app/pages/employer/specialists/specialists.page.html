@@ -1,0 +1,61 @@
+<ion-header class="ion-no-border simple-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title mode="md"><div class="title-wrap">{{isSavedPage ? 'Saved profiles' : 'Search for Candidates'}}</div></ion-title>
+    <ion-buttons slot="end" mode="md">
+      <ion-button (click)="bookmark()">
+        <ion-icon slot="icon-only" [name]="isBookmark ? 'bookmark' : 'bookmark-outline'"></ion-icon>
+      </ion-button>
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [formGroup]="form">
+  <div *ngIf="!isSavedPage" class="res">
+    <div class="res-row">
+      <ion-searchbar debounce="1000" formControlName="name" mode="ios" clearIcon="close-outline" class="res-search" placeholder="Candidate Search"></ion-searchbar>
+      <ion-buttons slot="end" mode="md" class="res-filter-wrap">
+        <div class="res-filter-count">{{activeFiltersCount}}</div>
+
+        <ion-button fill="solid" color="secondary" class="res-filter-btn" (click)="openSort($event)">
+          <ion-icon name="filter-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="solid" color="secondary" class="res-filter-btn" (click)="openFilter()">
+          <ion-icon slot="icon-only" name="options"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
+    <div class="res-options">
+      <div class="res-option">
+        <ion-toggle formControlName="full_time" mode="md" class="res-option__toggle" checked></ion-toggle>
+        <span class="res-option__label">full time</span>
+      </div>
+      <div class="res-option">
+        <ion-toggle formControlName="part_time" mode="md" class="res-option__toggle"></ion-toggle>
+        <span class="res-option__label">part time</span>
+      </div>
+      <div class="res-option">
+        <ion-toggle formControlName="on_demand" mode="md" class="res-option__toggle"></ion-toggle>
+        <span class="res-option__label">on demand</span>
+      </div>
+    </div>
+  </div>
+
+  <ion-list class="c-list" mode="md">
+    <ng-container *ngFor="let spec of specialists">
+      <app-specialist [spec]="spec" (blockCand)="blockUser($event)"></app-specialist>
+    </ng-container>
+  </ion-list>
+  <!--  -->
+
+</ion-content>
+

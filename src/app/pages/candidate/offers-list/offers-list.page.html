@@ -1,0 +1,128 @@
+<ion-header class="ion-no-border page-header" [ngClass]="{'hide-on-scroll': headerHideOnScroll, 'fixed-on-scroll': headerFixOnScroll}">
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="!isSearchOpened">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+
+      <ion-title class="page-header__title" mode="md" *ngIf="!isSearchOpened">Job offers</ion-title>
+
+      <div class="h-search" *ngIf="isSearchOpened">
+        <ion-buttons slot="start" mode="md" class="h-search__close">
+          <ion-button (click)="closeSearch()">
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-searchbar mode="ios" clearIcon="close-outline" class="h-search__input"></ion-searchbar>
+      </div>
+ 
+    <ion-buttons slot="end" mode="md" *ngIf="!isSearchOpened">
+      <ion-button (click)="openSearch()">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content fullscreen="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <div class="pagehead-bg"></div>
+  
+  <div class="page-content-wrap">
+    <h5 class="page-title">Job offers</h5>
+
+    <div class="page-container">
+      <div class="page-list-wrap">
+        <!-- <p class="ion-text-center">You don't have any offers yet</p> -->
+
+        <div class="offers-tabswrap">
+          <ion-segment class="offers-tabs" value="offers" mode="ios" (ionChange)="segmentChanged($event)">
+            <ion-segment-button value="offers" (click)="showOffers()">
+              <ion-label>Invite to interview</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+
+        <!-- Offers list -->
+        <ion-list class="c-list" mode="md" *ngIf="isOffersOpened">
+          <ion-item-sliding *ngFor="let offer of offers">
+            <ion-item class="c-list-item">
+              <div class="c-list-item__content" (click)="offerModal(offer)">
+                <div class="c-list-item__secondary">{{offer.prittyDateTime}}</div>
+                <h5 class="c-list-item__title">{{offer.jobName}}</h5>
+                <div class="c-list-item__info"><strong>Status:</strong> {{offer.status}}</div>
+                <div class="c-list-item__info"><strong>Position:</strong> {{offer.vacancy.job_name}}</div>
+              </div>
+                <ion-buttons slot="end" class="c-list-item__buttons">
+                </ion-buttons>
+            </ion-item>
+        
+            <ion-item-options side="end">
+              <ion-item-option color="danger">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+        <!-- end: Offers list -->
+
+        <!-- Messages list -->
+        <ion-list class="c-list" mode="md" *ngIf="isMessagesOpened">
+          <ion-item-sliding>
+            <ion-item button class="c-list-item" routerLink="/chat">
+              <div class="c-list-item__content">
+                <ion-chip color="warning" class="c-list-item__label">
+                  <ion-label>Message</ion-label>
+                </ion-chip>
+                <h5 class="c-list-item__title">Restaurant Manager</h5>
+                <div class="c-list-item__info"><strong>Status:</strong> Active</div>
+              </div>
+                <ion-buttons slot="end" class="c-list-item__buttons">
+                  <ion-button>
+                    <ion-icon slot="icon-only" name="mail-unread-outline"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+            </ion-item>
+        
+            <ion-item-options side="end">
+              <ion-item-option color="danger">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+          <ion-item-sliding>
+            <ion-item button class="c-list-item" routerLink="/chat">
+              <div class="c-list-item__content">
+                <ion-chip color="warning" class="c-list-item__label">
+                  <ion-label>Message</ion-label>
+                </ion-chip>
+                <h5 class="c-list-item__title">Restaurant Manager</h5>
+                <div class="c-list-item__info"><strong>Status:</strong> Active</div>
+              </div>
+                <ion-buttons slot="end" class="c-list-item__buttons">
+                  <ion-button>
+                    <ion-icon slot="icon-only" name="mail-unread-outline"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+            </ion-item>
+        
+            <ion-item-options side="end">
+              <ion-item-option color="danger">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+
+        </ion-list>
+        <!-- end: Messages list -->
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- <app-alert></app-alert> -->

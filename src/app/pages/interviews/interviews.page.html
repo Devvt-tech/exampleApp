@@ -1,0 +1,84 @@
+<ion-header class="ion-no-border simple-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title mode="md"><div class="title-wrap">Interviews</div></ion-title>
+
+    <ion-buttons slot="end" mode="md">
+
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <!-- <div class="dates-range">
+    <span>from: {{prittyStartDate}}</span>
+    <span>to: {{prittyEndDate}}</span>
+  </div> -->
+  
+</ion-header>
+<ion-content>
+  <div class="offers-tabswrap">
+    <ion-segment (ionChange)="segmentChanged($event)" class="offers-tabs" mode="ios">
+      <ion-segment-button value="pending">
+        <ion-label>Pending</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="confirmed">
+        <ion-label>{{isPast ? 'Past' : 'Confirmed'}}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  <ng-container *ngIf="segmentValue === 'pending' else segmentElse">
+    <app-candidate-offers-list *ngIf="!isCompany"></app-candidate-offers-list>
+    <app-company-offers-list *ngIf="isCompany"></app-company-offers-list>
+  </ng-container>
+  <ng-template #segmentElse>
+
+    <!-- <div class="offers-tabswrap">
+      <ion-segment (ionChange)="segmentChanged($event)" class="offers-tabs" mode="ios">
+        <ion-segment-button value="past">
+          <ion-label>Past</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="future">
+          <ion-label>Upcoming</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div> -->
+  
+  
+    <!-- <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher> -->
+  
+    <!-- <div class="c-list-header">
+      <div class="c-list-title"></div>
+      <ion-buttons class="c-list-actions">
+        <ion-button (click)="sort()" mode="md">
+          <ion-icon slot="icon-only" [name]="sortASC ? 'custom-sort-down' : 'custom-sort-up'"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div> -->
+    <!--  -->
+    <ion-list class="c-list" mode="md">
+      <ng-container *ngFor="let offer of info; let i = index">
+        <app-calendar-interview-item [calendarEvent]="offer"></app-calendar-interview-item>
+      </ng-container>
+      <ion-item-divider></ion-item-divider>
+    </ion-list>
+
+  </ng-template>
+  
+  
+</ion-content>
+<ion-footer>
+  <ion-toolbar class="ion-text-center">
+    <!-- <ion-button *ngIf="segmentValue === 'confirmed'" (click)="loadMoreClick()" color="primary" mode="md" class="f-btn btn-wide">Load more...</ion-button> -->
+    <ion-button *ngIf="segmentValue === 'confirmed' && !isPast" (click)="showPast()" color="primary" mode="md" class="f-btn btn-wide">Show past</ion-button>
+    <ion-button *ngIf="segmentValue === 'confirmed' && isPast" (click)="showConfirmed()" color="primary" mode="md" class="f-btn btn-wide">Back to confirmed</ion-button>
+  </ion-toolbar>
+</ion-footer>

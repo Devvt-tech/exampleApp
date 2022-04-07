@@ -1,0 +1,342 @@
+<!-- <ion-header class="ion-no-border"> -->
+<ion-header class="ion-no-border page-header" [ngClass]="{'hide-on-scroll': headerHideOnScroll, 'fixed-on-scroll': headerFixOnScroll}">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+    <!-- ----- {{isCompany}}
+    <ion-title *ngIf="!isCompany" class="page-header__title">My profile</ion-title>
+    <ion-title *ngIf="isCompany" class="page-header__title">Company profile</ion-title> -->
+    <ion-buttons slot="end" mode="md">
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <div class="pagehead-bg"></div>
+  <div *ngIf="form" [formGroup]="form" class="page-content-wrap">
+    <h5 class="page-title">{{isCompany ? 'Company Profile' : 'My Profile'}}</h5>
+
+    <div *ngIf="percent < 100" class="pr-progress progress">
+      <div>{{percent}}% profile completed</div>
+      <ion-progress-bar color="light" value="{{percent / 100}}"></ion-progress-bar>
+    </div>
+
+    <div class="f-wrap">
+      
+      <ion-grid class="f-grid">
+        
+        <ion-row class="f-row f-form-group">
+          <ion-col size="12" class="f-col">
+            <div class="f-label">Photo*</div>
+            <div class="img_" style="background-image: url('assets/img/demo/');" *ngIf="localImg || serverImg">
+              <ion-img (click)="onImageClick(localImg || serverImg)" [src]="localImg || serverImg"></ion-img>
+            </div>
+            <div class="f-icon-box-row">
+              <div class="f-icon-box ion-activatable" (click)="selectPhoto()">
+                <ion-icon name="cloud-upload-outline" class="f-icon-box__icon"></ion-icon>
+                <div class="f-icon-box__text">Upload</div>
+                <ion-ripple-effect></ion-ripple-effect>
+              </div>
+              <div class="f-icon-box ion-activatable" (click)="takePhoto()">
+                <ion-icon name="camera-outline" class="f-icon-box__icon"></ion-icon>
+                <div class="f-icon-box__text">Take photo</div>
+                <ion-ripple-effect></ion-ripple-effect>
+              </div>
+            </div>
+          </ion-col>
+          <div *ngIf="form && form.get('image').hasError('required')" class="validation-error ion-text-center"> {{fieldIsRequired}}</div>
+        </ion-row>
+        <ion-row *ngIf="!isCompany" class="f-row f-form-group">
+          <ion-col size="12" class="f-col">
+            <div class="f-label">Video</div>
+            <video id="video" class="video_" *ngIf="localVideo || serverVideo" [poster]="poster" controls height="250" preload="auto">
+              <source [src]="localVideo || serverVideo" type="video/mp4">
+            </video>
+            <div class="f-icon-box-row">
+              <div (click)="deleteClick()" class="f-icon-box f-icon-box_red ion-activatable" *ngIf="localVideo || serverVideo">
+                <ion-icon name="trash-outline" class="f-icon-box__icon"></ion-icon>
+                <div class="f-icon-box__text">Delete</div>
+                <ion-ripple-effect></ion-ripple-effect>
+              </div>
+              <div class="f-icon-box ion-activatable" (click)="selectVideo()">
+                <ion-icon name="cloud-upload-outline" class="f-icon-box__icon"></ion-icon>
+                <div class="f-icon-box__text">Upload</div>
+                <ion-ripple-effect></ion-ripple-effect>
+              </div>
+              <div class="f-icon-box ion-activatable" (click)="recordVideo()">
+                <ion-icon name="videocam-outline" class="f-icon-box__icon"></ion-icon>
+                <div class="f-icon-box__text">Record</div>
+                <ion-ripple-effect></ion-ripple-effect>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="f-row f-form-group">
+          <ion-col size="12" class="f-col">
+            <div class="f-label">{{isCompany ? 'Company name*' : 'Candidate name*'}} </div>
+            <ion-item class="f-input-wrap"> 
+              <ion-input formControlName="name" mode="md"></ion-input>
+            </ion-item>
+            <div *ngIf="form.get('name').dirty && form.get('name').hasError('required')" class="validation-error ion-text-center"> {{fieldIsRequired}}</div>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row class="f-row">
+          <ion-col size="12" class="f-col">
+            <div class="f-label">{{isCompany ? 'Company description*' : 'Intro About'}} </div>
+            <ion-item class="f-textarea-wrap has-chars-count">
+              <ion-textarea formControlName="summery" mode="md"></ion-textarea>
+            </ion-item>
+            <div *ngIf="form.get('summery').dirty && form.get('summery').hasError('required')" class="validation-error ion-text-center"> {{fieldIsRequired}}</div>
+            <div class="chars-count">{{descriptionLength}} characters from 300</div>
+          </ion-col>
+        </ion-row>
+
+        <ng-container *ngIf="!isCompany">
+          <ion-row class="f-row f-form-group">
+            <ion-col size="12" class="f-col">
+              <div class="f-label has-help-icon"><span>Ready to work*</span> <ion-icon name="help-circle" (click)="infoPopover($event)"></ion-icon></div>
+              <ion-item class="f-select-wrap">
+                <ion-select [multiple]="true" formControlName="types_employment" interface="popover">
+                  <ion-select-option [value]="1">Full Time</ion-select-option>
+                  <ion-select-option [value]="2">Part Time</ion-select-option>
+                  <ion-select-option [value]="3">On demand</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <div *ngIf="form.get('types_employment').touched && form.get('types_employment').hasError('required')" class="validation-error ion-text-center"> {{fieldIsRequired}}</div>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+  
+
+        <ion-row class="f-row f-form-group">
+          <ion-col size="12" class="f-col">
+            <div class="f-label has-help-icon">{{isCompany ? 'Location*' : 'Work Locations*'}}</div>
+            <div class="f-pseudo-select ion-activatable" (click)="locationModal()">
+              {{user?.city?.name}}
+              <ion-ripple-effect></ion-ripple-effect>
+            </div>
+          </ion-col>
+        </ion-row>
+        <div *ngIf="form.get('city').touched && form.get('city').hasError('required')" class="validation-error ion-text-center"> {{fieldIsRequired}}</div>
+    
+      </ion-grid>
+    </div>
+
+    <ng-container *ngIf="!isCompany">
+      <div class="f-wrap">
+        <ion-grid class="f-grid">
+          <ion-row class="f-row f-form-group">
+            <ion-col size="12" class="f-col">
+              <div class="page-subtitle">Experience*</div>
+              <div formArrayName="positions" *ngIf="formLoaded">
+                <div *ngFor="let posControl of positions.controls; let ind = index" class="position-item">
+                  <app-multiinput
+                    [position]="posControl"
+                    [arrayLength]="positions.controls.length"
+                    (addPosition)="addPosition(form)"
+                    (remPosition)="remPosition($event)"
+                    [index]="ind"
+                    [form]="this.form"
+                    ></app-multiinput>
+                </div>
+              </div>
+              
+            </ion-col>
+          </ion-row>
+          <div class="add-position-button">
+            <ion-button (click)="addPosition(form)">Add new</ion-button>
+          </div>
+      
+        </ion-grid>
+      </div>
+    </ng-container>
+
+    <div class="f-wrap" *ngIf="isCompany">
+      <ion-grid class="f-grid">
+        <ion-row class="f-row f-form-group">
+          <ion-col size="12" class="f-col">
+            <div class="page-subtitle">Addresses</div>
+            <ion-list class="c-list" mode="md">
+              <ng-container *ngFor="let address of addresses">
+                <app-address-list-item [showActions]="true" [address]="address" (changeList)="updateAddressList()"></app-address-list-item>
+              </ng-container>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <div class="add-position-button">
+          <ion-button (click)="addAddress()">Add new</ion-button>
+        </div>
+    
+      </ion-grid>
+    </div>
+
+    <ng-container *ngIf="!isCompany">
+      <div class="f-wrap">
+        <ion-grid class="f-grid">
+          <ion-row class="f-row f-form-group">
+            <ion-col size="12" class="f-col">
+              <div class="page-subtitle">Desired positions</div>
+              <div formArrayName="interesting_jobs" *ngIf="formLoaded">
+                <div *ngFor="let jobControl of interestingJobs.controls; let ind = index" class="position-item">
+                  <div class="mi-header">
+                    <div class="f-label">Position*</div>
+                    <div class="f-acrions">
+                      <ion-button (click)="remInterestingJob(ind)" fill="none" class="f-acrions__btn">
+                        <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+                      </ion-button>
+                    </div>
+                  </div>
+                  <ion-item class="f-input-wrap">
+                    <ion-select [formControlName]="ind" mode="md" placeholder="Choose the position">
+                      <ion-select-option *ngFor="let type of typeOfJobs; let i = index" [value]="type">
+                        {{type}}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                  <div
+                  *ngIf="jobControl.touched && jobControl.hasError('required')"
+                  class="validation-error ion--center"> {{fieldIsRequired}}</div>
+                </div>
+              </div>
+              
+            </ion-col>
+          </ion-row>
+          <div class="add-position-button">
+            <ion-button (click)="addInterestingJob(form)">Add new</ion-button>
+          </div>
+      
+        </ion-grid>
+      </div>
+    </ng-container>
+    
+
+
+    <ng-container>
+      <div class="f-wrap">
+        <ion-grid class="f-grid">
+          <ion-row class="f-row f-form-group">
+            <ion-col size="12" class="f-col">
+              <div class="page-subtitle">{{isCompany ? 'Operating Hours*' : 'Availability*'}}</div>
+              <ion-button color="bluegrey" mode="md" class="f-btn btn-wide" (click)="availabilityModal()">Add</ion-button>
+              <div class="f-text">
+                <div *ngFor="let day of daysArray">
+                  <div *ngIf="availabilities[day.toLowerCase()]">
+                    <b>{{day}}:</b>
+                    <span *ngFor="let t of availabilities[day.toLowerCase()]; let i = index">
+                      {{(t.start | date: 'shortTime').replace(' ', '')}} - {{(t.end | date: 'shortTime').replace(' ', '')}}
+                      <span *ngIf="availabilities[day.toLowerCase()].length - 1 !== i">,</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="validation-error" *ngIf="!hasAvailabilities">{{fieldIsRequired}}</div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+      <div class="f-wrap">
+        <ion-grid *ngIf="!isCompany" class="f-grid">
+          <ion-row class="f-row f-form-group">
+            <ion-col size="12" class="f-col">
+              <div class="page-subtitle">Credentials</div>
+            </ion-col>
+          </ion-row>
+          <ion-list lines="none">
+            <ion-item button detail="true" class="nav-list__item" (click)="toCertificates('certificate')">
+              <div class="nav-list__title">Certificates / Licenses</div>
+            </ion-item>
+            <ion-item button detail="true" class="nav-list__item" (click)="toCertificates('resume')">
+              <div class="nav-list__title">Resume</div>
+            </ion-item>
+          </ion-list>
+
+        </ion-grid>
+      </div>
+  
+      <div *ngIf="!isCompany" class="f-wrap">
+        <ion-grid class="f-grid">
+          <ion-row class="f-row f-form-group">
+            <ion-col size="12" class="f-col">
+              <div class="page-subtitle">Covid 19</div>
+              <div class="f-label mb-0">Are you willing to discuss your vaccination status?</div>
+            <!--  -->
+        
+              <ion-radio-group formControlName="covid" mode="md">
+                <div class="f-radio-group-inline">
+                  <ion-item class="f-radio-wrap">
+                    <ion-label>Yes</ion-label>
+                    <ion-radio [value]="1"></ion-radio>
+                  </ion-item>
+              
+                  <ion-item class="f-radio-wrap">
+                    <ion-label>No</ion-label>
+                    <ion-radio [value]="0"></ion-radio>
+                  </ion-item>
+                </div>
+            
+              </ion-radio-group>
+        
+            <!--  -->
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ng-container>
+
+    <div class="f-wrap">
+      <ion-grid class="f-grid">
+        <ion-row class="f-row">
+          <ion-col size="12" class="f-col">
+            <div class="page-subtitle">Social media</div>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row class="f-row f-form-group">
+          <ion-col size="12" class="f-col f-social-group">
+            <ion-icon name="custom-facebook" class="f-social-icon"></ion-icon>  
+            <ion-item class="f-input-wrap">
+              <ion-input formControlName="facebook" class="f-input" placeholder="Facebook"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row class="f-col f-form-group">
+          <ion-col size="12" class="f-social-group">
+            <ion-icon name="custom-instagram" class="f-social-icon"></ion-icon>  
+            <ion-item class="f-input-wrap">
+              <ion-input formControlName="instagram" class="f-input" placeholder="Instagram"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row class="f-col f-form-group">
+          <ion-col size="12" class="f-social-group">
+            <ion-icon name="custom-twitter" class="f-social-icon"></ion-icon>  
+            <ion-item class="f-input-wrap">
+              <ion-input formControlName="twitter" class="f-input" placeholder="Twitter"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+    
+      </ion-grid>
+    </div>
+
+  </div>
+  
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="ion-text-center">
+    <ion-button [disabled]="!form || form.invalid || !hasAvailabilities" (click)="save()" color="primary" mode="md" class="f-btn btn-wide">Save</ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,61 @@
+<ion-header class="ion-no-border simple-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title mode="md"><div class="title-wrap">Saved Searches</div></ion-title>
+
+    <ion-buttons slot="end" mode="md">
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list class="c-list" mode="md">
+
+    <ion-item-sliding>
+      <ion-item button class="c-list-item">
+        <div slot="start" class="saved-search-icon">
+          <ion-icon name="custom-saved-search"></ion-icon>
+        </div>
+        <div class="c-list-item__content">
+          <h5 class="c-list-item__title">Sous Chef</h5>
+          <div class="c-list-item__info">part time · on demand</div>
+          <div class="c-list-item__info-secondary">Bayonne, Fort Lee, New York City, USA</div>
+        </div>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding>
+      <ion-item button class="c-list-item">
+        <div slot="start" class="saved-search-icon">
+          <ion-icon name="custom-saved-search"></ion-icon>
+        </div>
+        <div class="c-list-item__content">
+          <h5 class="c-list-item__title">Restaurant Manager</h5>
+          <div class="c-list-item__info">full time</div>
+          <div class="c-list-item__info-secondary">Bayonne, Fort Lee, New York City, USA</div>
+        </div>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+</ion-content>

@@ -1,0 +1,90 @@
+<ion-header class="ion-no-border simple-header">
+  <ion-toolbar>
+    <!-- <ion-title>Position Application</ion-title> -->
+    <ion-buttons slot="end">
+      <ion-back-button mode="md" icon="close-outline" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list class="c-list" mode="md" lines="none">
+    <ion-item class="c-list-item">
+      <ion-avatar slot="start" class="c-list-item__avatar">
+        <img src="./assets/img/demo/avatar.jpg">
+      </ion-avatar>
+      <div class="c-list-item__content">
+        <h5 class="c-list-item__title">John Doe</h5>
+        <div class="c-raiting-sm">
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+        </div>
+        <div class="c-list-item__info"><strong>Position:</strong> Restaurant Manager</div>
+      </div>
+    
+    </ion-item>
+  </ion-list>
+
+  <div class="pos-candidate-info">
+    <div class="f-form-group">
+      <ion-button color="secondary" fill="outline" mode="md" class="f-btn btn-wide" routerLink="/specialist">View profile</ion-button>
+    </div>
+    <div class="f-form-group">
+      <div class="f-label fw-600">Message</div>
+       <div>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet integer habitasse aenean diam leo dignissim. Sit amet nec, nulla et aliquam, aliquet faucibus est at. Nec iaculis nisl, imperdiet aliquam porttitor faucibus in sit. Aliquet urna, sed euismod neque augue. Lectus vel faucibus sagittis aliquam, accumsan quis placerat diam dolor. Amet pulvinar pharetra non sem enim, feugiat volutpat euismod.
+          <br>
+          Enim sagittis fringilla eget amet. In nulla neque, laoreet id pellentesque. Integer odio massa libero nisl eget. Quis porta sit feugiat tellus, nisl nec scelerisque. Mauris amet elementum laoreet hendrerit nulla egestas. Facilisi ut sed auctor massa fermentum imperdiet. Placerat mi, amet egestas risus ornare cras tincidunt elit. Egestas dui eleifend pretium interdum. In purus et vulputate mauris ipsum.
+        </div>
+    </div>
+
+    <div class="msg-btn-wrap">
+      <ion-button color="secondary" mode="md" class="f-btn btn-wide">Message candidate</ion-button>
+    </div>
+
+    <div class="f-form-group">
+      <div class="f-label fw-600">Candidate offering new time</div>
+      <ion-radio-group mode="md" >
+        <div class="f-radio-group">
+          <ion-item class="f-radio-wrap">
+            <ion-radio value="1"></ion-radio>
+            <ion-label>09.30.2021, 10:00 AM - 11:00 AM</ion-label>
+            
+          </ion-item>
+        </div>
+
+        <div class="f-radio-group">
+          <ion-item class="f-radio-wrap">
+            <ion-radio value="2"></ion-radio>
+            <ion-label>09.30.2021, 11:00 AM - 12:00PM</ion-label>
+            
+          </ion-item>
+        </div>
+      </ion-radio-group>
+
+      <ion-button color="secondary" mode="md" class="f-btn btn-wide mt-8">Propose a new time</ion-button>
+    </div>
+    
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="footer-buttons">
+    <ion-button color="secondary" fill="outline" mode="md" class="f-btn btn-wide">Reject</ion-button>
+    <ion-button color="primary" mode="md" class="f-btn btn-wide">Accept</ion-button>
+  </ion-toolbar>
+</ion-footer>

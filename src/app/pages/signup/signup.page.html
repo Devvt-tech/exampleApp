@@ -1,0 +1,95 @@
+<ion-content>
+  <div class="login-wrap">
+    <div *ngIf="form" [formGroup]="form" class="login-form">
+      <div class="login-title">Sign Up</div>
+
+      <div class="login-input-group">
+        <ion-item ion-color="color" mode="md">
+          <ion-label>Account Type</ion-label>
+          <ion-select formControlName="role_id" interface="popover">
+            <ion-select-option value="1">Candidate</ion-select-option>
+            <ion-select-option value="2">Company</ion-select-option>
+          </ion-select>
+          <!-- <ion-select>
+            <ion-select-option value="1">Candidate</ion-select-option>
+            <ion-select-option value="2">Employer</ion-select-option>
+          </ion-select> -->
+        </ion-item>
+        <div *ngIf="form.get('role_id').touched && form.get('role_id').hasError('required')" class="validation-error">{{fieldIsRequired}}</div>
+        <div *ngIf="showServerError && commonService.getTextErrorByFieldName(response.errors, 'role_id')" class="validation-error">
+          {{commonService.getTextErrorByFieldName(response.errors, 'role_id')}}
+        </div>
+      </div>
+
+      <div class="login-input-group">
+        <ion-item mode="md">
+          <ion-label position="floating">Name</ion-label>
+          <ion-input formControlName="name"></ion-input>
+        </ion-item>
+        <div *ngIf="form.get('name').touched && form.get('name').hasError('required')" class="validation-error">{{fieldIsRequired}}</div>
+        <div *ngIf="showServerError && commonService.getTextErrorByFieldName(response.errors, 'name')" class="validation-error">
+          {{commonService.getTextErrorByFieldName(response.errors, 'name')}}
+        </div>
+      </div>
+
+      <div class="login-input-group">
+        <ion-item mode="md">
+          <ion-label position="floating">Phone Number</ion-label>
+          <ion-input formControlName="phone" type="tel" maxlength="12" [brmasker]="{mask:'000-000-0000', len:13, userCaracters: true, type:'num'}"></ion-input>
+        </ion-item>
+        <div *ngIf="form.get('phone').touched && form.get('phone').hasError('required')" class="validation-error">{{fieldIsRequired}}</div>
+        <div *ngIf="showServerError && commonService.getTextErrorByFieldName(response.errors, 'phone')" class="validation-error">
+          {{commonService.getTextErrorByFieldName(response.errors, 'phone')}}
+        </div>
+      </div>
+
+      <div class="login-input-group">
+        <ion-item mode="md">
+          <ion-label position="floating">Email</ion-label>
+          <ion-input formControlName="email" ></ion-input>
+        </ion-item>
+        <div *ngIf="form.get('email').touched && form.get('email').hasError('required')" class="validation-error">{{fieldIsRequired}}</div>
+        <div *ngIf="form.get('email').touched && form.get('email').hasError('email')" class="validation-error">Field must be email</div>
+        <div *ngIf="showServerError && commonService.getTextErrorByFieldName(response.errors, 'email')" class="validation-error">
+          {{commonService.getTextErrorByFieldName(response.errors, 'email')}}
+        </div>
+      </div>
+
+      <div class="login-input-group">
+        <ion-item mode="md">
+          <ion-label position="floating">Password</ion-label>
+          <ion-input formControlName="password" type="password"></ion-input>
+        </ion-item>
+        <div *ngIf="form.get('password').touched && form.get('password').hasError('required')" class="validation-error">{{fieldIsRequired}}</div>
+        <div *ngIf="showServerError && commonService.getTextErrorByFieldName(response.errors, 'password')" class="validation-error">
+          {{commonService.getTextErrorByFieldName(response.errors, 'password')}}
+        </div>
+      </div>
+
+      <div class="login-input-group">
+        <ion-item mode="md">
+          <ion-label position="floating">Repeat Password</ion-label>
+          <ion-input formControlName="password_confirmation" type="password"></ion-input>
+        </ion-item>
+        <div *ngIf="form.get('password_confirmation').touched && form.get('password_confirmation').hasError('required')" class="validation-error">{{fieldIsRequired}}</div>
+        <div *ngIf="showServerError && commonService.getTextErrorByFieldName(response.errors, 'password_confirmation')" class="validation-error">
+          {{commonService.getTextErrorByFieldName(response.errors, 'password_confirmation')}}
+        </div>
+      </div>
+
+      <div class="login-btn-wrap">
+        <ion-button [disabled]="form.invalid" (click)="registerClick()" color="primary" mode="md" class="login-btn">Submit</ion-button>
+      </div>
+      <div *ngIf="showServerError && commonService.getTextErrorByFieldName(response.errors, 'common')" class="validation-error">
+        {{commonService.getTextErrorByFieldName(response.errors, 'common')}}
+      </div>
+
+      <div class="login-bottom-links">
+        Already have an account? <span class="login-bottom-links__link" routerLink="/login">Login</span>
+      </div>
+      
+  
+    </div>
+  </div>
+  
+</ion-content>

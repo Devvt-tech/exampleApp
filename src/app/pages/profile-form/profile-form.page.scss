@@ -1,0 +1,97 @@
+@import "../../../theme/_forms";
+@import "../../../theme/_profile";
+
+ion-content {
+    // --padding-start: 16px;
+    // --padding-end: 16px;
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 8px;
+}
+
+.f-wrap {
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-bottom: 24px;
+    &_mt {
+        margin-top: 132px;
+    }
+    
+}
+
+.f-grid {
+    background: #fff;
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%), 0 3px 11px -2px rgb(0 0 0 / 10%), 0 1px 5px 0 rgb(0 0 0 / 10%);
+    border-radius: 4px;
+    position: relative;
+    z-index: 2;
+    padding: 24px 16px;
+    // padding: 16px;
+    .f-form-group:last-child {
+        margin-bottom: 0;
+    }
+
+    
+}
+
+.img_ {
+    // margin: auto;
+    // display: flex;
+    margin-bottom: 8px;
+    ion-img {
+        width: 116px;
+        height: auto;
+        max-width: 100%;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+}
+
+.video_ {
+    // display: flex;
+    // margin: auto;
+    margin-bottom: 8px;
+    // video {
+        max-width: 100%;
+        border-radius: 4px;
+    // }
+}
+
+.position-item {
+    margin-bottom: 24px;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.add-position-button {
+    display: flex;
+    justify-content: center;
+}
+
+.mi-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    .f-label {
+        margin-bottom: 0;
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+    .f-acrions {
+        margin-right: -4px;
+        margin-top: 0;
+        flex-grow: 0;
+        flex-shrink: 0;
+        justify-content: flex-end;
+    }
+}
+
+.progress {
+    position: relative;
+    z-index: 2;
+    div {
+        //background-color: white;
+    }
+}

@@ -1,0 +1,22 @@
+@import "../../../../theme/_forms";
+
+ion-content {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-top: 24px;
+    --padding-bottom: 32px;
+}
+
+.f-grid {
+    padding: 0;
+}
+
+.new-question-buttons {
+    margin-top: 8px;
+    .f-btn {
+        margin: 0 12px 0 0;
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}

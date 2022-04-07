@@ -1,0 +1,56 @@
+<ion-header class="ion-no-border simple-header">
+  <ion-toolbar>
+    <ion-title mode="md"><div class="title-wrap">Name of the quiz</div></ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button mode="md" icon="close-outline" text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <div class="quiz-progress-wrap" *ngIf="!isQuizComplete">
+    <ion-progress-bar [value]="answeredPercent" class="quiz-progress"></ion-progress-bar>
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="quiz-results" *ngIf="isQuizComplete">
+    <div class="round-progress-wrapper">
+      <div class="round-progress-current">{{savedRating}}</div>
+      <round-progress
+        [current]="savedRating"
+        [max]="100"
+        [color]="'#66BB6A'"
+        [background]="'#C8E6C9'"
+        [stroke]="16"
+        [clockwise]="true"
+        [responsive]="true"></round-progress>
+    </div>
+    <div class="quiz-results__note">You can retake the quiz in 3 months</div>
+    <div class="quiz-results__btn-wrap">
+      <ion-button color="secondary" fill="outline" mode="md" class="f-btn btn-wide" routerLink="/assessments">Back to Quizzes</ion-button>
+    </div>
+    
+  </div>
+  <div class="quiz-questions" *ngIf="!isQuizComplete" [formGroup]="form">
+    <div *ngFor="let quest of questions" class="f-form-group">
+      <div class="f-label mb-0">{{quest.name}}</div>
+
+      <ion-radio-group [formControlName]="quest.id" mode="md" >
+        <div class="f-radio-group">
+          <ion-item *ngFor="let answ of quest.answers" class="f-radio-wrap">
+            <ion-radio value={{answ.id}}></ion-radio>
+            <ion-label>{{answ.name}}</ion-label>
+            
+          </ion-item>
+        </div>
+      </ion-radio-group>
+    </div>
+
+  </div>
+
+</ion-content>
+
+<ion-footer *ngIf="!isQuizComplete">
+  <ion-toolbar class="ion-text-center">
+    <ion-button [disabled]="form.invalid" (click)="save()" color="primary" mode="md" class="f-btn btn-wide">Save</ion-button>
+  </ion-toolbar>
+</ion-footer>

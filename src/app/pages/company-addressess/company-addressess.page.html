@@ -1,0 +1,42 @@
+<ion-header class="ion-no-border page-header" [ngClass]="{'hide-on-scroll': headerHideOnScroll, 'fixed-on-scroll': headerFixOnScroll}">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+
+      <!-- <ion-title class="page-header__title" mode="md">Positions 1</ion-title> -->
+
+ 
+    <ion-buttons slot="end" mode="md">
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content fullscreen="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <div class="pagehead-bg"></div>
+  <div class="page-content-wrap">
+    <h5 class="page-title">Address</h5>
+
+    <div class="page-container">
+      <div class="page-list-wrap">
+        <ion-list class="c-list" mode="md">
+          <ng-container *ngFor="let address of addresses">
+            <app-address-list-item [showActions]="true" (changeList)="updateAddressList()" [address]="address"></app-address-list-item>
+          </ng-container>
+        </ion-list>
+      </div>
+    </div>
+  </div>
+  
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="footer-buttons">
+    <ion-button color="primary" mode="md" class="f-btn btn-wide" (click)="addAddressModal()">Add new address</ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,13 @@
+ion-content {
+    --padding-top: 40px;
+    --padding-bottom: 16px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+}
+
+.mo-btn {
+    margin-bottom: 16px;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}

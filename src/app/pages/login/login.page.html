@@ -1,0 +1,60 @@
+<ion-content>
+  <div *ngIf="isDevServer" class="prod-mark-wrap">
+    <div>Test server</div>
+  </div>
+  <div class="login-wrap">
+    <form [formGroup]="form" class="login-form">
+      <div class="login-title">Login</div>
+      
+      <div class="login-input-group">
+        <ion-item mode="md">
+          <ion-label position="floating">Phone Number</ion-label>
+          <ion-input formControlName="phone" type="tel" maxlength="12" [brmasker]="{mask:'000-000-0000', len:13, userCaracters: true, type:'num'}"></ion-input>
+        </ion-item>
+        <div *ngIf="form.get('phone').touched && form.get('phone').hasError('required')" class="validation-error">{{fieldIsRequired}}</div>
+        <div *ngIf="showServerError && commonService.getTextErrorByFieldName(response.error, 'phone')" class="validation-error">
+          {{commonService.getTextErrorByFieldName(response.error, 'phone')}}
+        </div>
+      </div>
+
+      <div class="login-input-group">
+        <ion-item mode="md">
+          <ion-label position="floating">Password</ion-label>
+          <ion-input type="{{isShowPassword ? 'text' : 'password'}}" formControlName="password"></ion-input>
+          <ion-icon (click)="eye($event)" class="eye" name="{{isShowPassword ? 'eye-off' : 'eye'}}" slot="end"></ion-icon>
+          
+        </ion-item>
+        <div *ngIf="form.get('password').touched && form.get('password').hasError('required')" class="validation-error">{{fieldIsRequired}}</div>
+        <div *ngIf="showServerError && commonService.getTextErrorByFieldName(response.error, 'password')" class="validation-error">
+          {{commonService.getTextErrorByFieldName(response.error, 'password')}}
+        </div>
+        <div class="login-forgot-link" routerLink="/forgot-password">Forgot Password?</div>
+      </div>
+
+      
+      <div class="login-btn-wrap">
+        <ion-button [disabled]="form.invalid" type="submit" color="primary" mode="md" class="login-btn" (click)="login()" >Submit</ion-button>
+        <br><br>
+        <ion-button color="primary" mode="md" class="login-btn" (click)="testCand1()" >Cand 1</ion-button>
+        <ion-button color="primary" mode="md" class="login-btn" (click)="testCand2()" >Cand 2</ion-button>
+        <ion-button color="primary" mode="md" class="login-btn" (click)="testComp1()" >Comp 1</ion-button>
+        <ion-button color="primary" mode="md" class="login-btn" (click)="testComp2()" >Comp 2</ion-button>
+      </div>
+
+      <div *ngIf="haveCredInStorage && isAvailBio" class="login-face-id" (click)="bioClick()" >
+        <img src="/assets/img/face-id.svg" class="login-face-id__img">
+        <span class="login-face-id__text">Login with Face ID</span>
+      </div>
+      <div *ngIf="showServerError && commonService.getTextErrorByFieldName(response.error, 'common')" class="validation-error">
+        {{commonService.getTextErrorByFieldName(response.error, 'common')}}
+      </div>
+
+      <div class="login-bottom-links">
+        Don't have an account yet? <span class="login-bottom-links__link" routerLink="/signup">Sign Up</span>
+      </div>
+      
+  
+    </form>
+  </div>
+  
+</ion-content>

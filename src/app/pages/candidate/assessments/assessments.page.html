@@ -1,0 +1,54 @@
+<ion-header class="ion-no-border simple-header">
+  <ion-toolbar>
+    <ion-title>Сredentials</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon icon="close-outline"></ion-icon> 
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="offers-tabswrap">
+    <ion-segment class="offers-tabs" value="quizzes" mode="ios">
+      <ion-segment-button value="quizzes" (click)="showQuizzes()">
+        <ion-label>Quizzes</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  <ion-list class="nav-list">
+    <ion-list *ngIf="isShowQuizzes; else assessments" class="nav-list">
+      <ion-item *ngFor="let quizz of quizzes" class="nav-list__item">
+        <div>
+          <div class="nav-list__title">{{quizz.name}}</div>
+          <div *ngIf="quizz.quiz_rating.length > 0" class="nav-list__subtitle">You can retake the quiz in {{quizz.textInterval}}</div>
+        </div>
+        <ng-container *ngIf="quizz.quiz_rating.length > 0; else elseRaiting">
+          <ng-container *ngFor="let rating of quizz.quiz_rating">
+            <ion-note *ngIf="rating.percRating <= 25" slot="end" color="danger" class="quiz-progress">{{rating.rating}}%</ion-note>
+            <ion-note *ngIf="rating.percRating > 25 && rating.percRating <= 75" slot="end" color="warning" class="quiz-progress">{{rating.rating}}%</ion-note>
+            <ion-note *ngIf="rating.percRating > 75" slot="end" color="success" class="quiz-progress">{{rating.rating}}%</ion-note>
+          </ng-container>
+        </ng-container>
+        <ng-template #elseRaiting>
+          <ion-button slot="end" size="small" fill="outline" color="secondary" routerLink="{{'/quiz/' + quizz.id}}">Take</ion-button>
+        </ng-template>
+      </ion-item>
+    </ion-list>
+    <ng-template #assessments>
+      <ion-item button detail="true" class="nav-list__item" routerLink="/certificates-upload/certificate">
+        <div class="nav-list__title">Certificates / Licenses</div>
+      </ion-item>
+      <ion-item button detail="true" class="nav-list__item" routerLink="/certificates-upload/resume">
+        <div class="nav-list__title">Resume</div>
+      </ion-item>
+      <ion-item button detail="true" class="nav-list__item" routerLink="/certificates-upload/safety">
+        <div class="nav-list__title">Safety - cpr certified</div>
+      </ion-item>
+      <ion-item button detail="true" class="nav-list__item" routerLink="/certificates-upload/proof">
+        <div class="nav-list__title">Proof of licenses</div>
+      </ion-item>
+    </ng-template>
+  </ion-list>
+</ion-content>

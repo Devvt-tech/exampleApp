@@ -1,0 +1,182 @@
+<ion-header class="ion-no-border simple-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title mode="md"><div class="title-wrap">{{vacancy.job.name}}</div></ion-title>
+    <ion-buttons slot="end" mode="md">
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="pos-info-wrap">
+    <div class="f-form-group">
+      <div class="job-info">
+        <p><span class="fw-600">Location:</span> 330 Broadway, Bayonne, NJ 07002</p>
+        <p><span class="fw-600">Type of employment:</span> {{employmNames}}</p>
+        <p><span class="fw-600">Hourly rate: </span>${{vacancy.from}} - ${{vacancy.to}}<p>
+      </div>
+    </div>
+  
+    <div class="f-form-group">
+      <div class="f-label fw-600">Job Description</div>
+       <div>
+          {{vacancy.description}}
+        </div>
+    </div>
+  </div>
+  
+  <!-- <div class="c-list-header">
+    <div class="c-list-title">Applications</div>
+  </div> -->
+
+  <!-- <ion-list class="c-list" mode="md">
+    <ion-item class="c-list-item">
+      <ion-avatar slot="start" class="c-list-item__avatar" routerLink="/position-application">
+        <img src="./assets/img/demo/avatar.jpg">
+      </ion-avatar>
+      <div class="c-list-item__content" routerLink="/position-application">
+        <h5 class="c-list-item__title">John Doe</h5>
+        <div class="c-raiting-sm">
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+        </div>
+        <div class="c-list-item__info"><strong>Position:</strong> Restaurant Manager</div>
+      </div>
+      <ion-buttons slot="end" class="c-list-item__buttons">
+        <ion-button routerLink="/chat">
+          <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
+        </ion-button>
+        <ion-button (click)="positionApplicationActions($event)" class="btn-ellipsis-vertical">
+          <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+    <ion-item class="c-list-item">
+      <ion-avatar slot="start" class="c-list-item__avatar" routerLink="/position-application">
+        <img src="./assets/img/demo/avatar6.jpg">
+      </ion-avatar>
+      <div class="c-list-item__content" routerLink="/position-application">
+        <h5 class="c-list-item__title">Jane Doe</h5>
+        <div class="c-raiting-sm">
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+        </div>
+        <div class="c-list-item__info"><strong>Position:</strong> Restaurant Manager</div>
+      </div>
+      <ion-buttons slot="end" class="c-list-item__buttons">
+        <ion-button routerLink="/chat">
+          <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
+        </ion-button>
+        <ion-button (click)="positionApplicationActions($event)" class="btn-ellipsis-vertical">
+          <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+    <ion-item class="c-list-item">
+      <ion-avatar slot="start" class="c-list-item__avatar" routerLink="/position-application">
+        <img src="./assets/img/demo/avatar.jpg">
+      </ion-avatar>
+      <div class="c-list-item__content" routerLink="/position-application">
+        <h5 class="c-list-item__title">John Doe</h5>
+        <div class="c-raiting-sm">
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star-half-outline"></ion-icon>
+          </div>
+        </div>
+        <div class="c-list-item__info"><strong>Position:</strong> Restaurant Manager</div>
+      </div>
+      <ion-buttons slot="end" class="c-list-item__buttons">
+        <ion-button routerLink="/chat">
+          <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
+        </ion-button>
+        <ion-button (click)="positionApplicationActions($event)" class="btn-ellipsis-vertical">
+          <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+    <ion-item class="c-list-item">
+      <ion-avatar slot="start" class="c-list-item__avatar" routerLink="/position-application">
+        <img src="./assets/img/demo/avatar6.jpg">
+      </ion-avatar>
+      <div class="c-list-item__content" routerLink="/position-application">
+        <h5 class="c-list-item__title">Jane Doe</h5>
+        <div class="c-raiting-sm">
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star"></ion-icon>
+          </div>
+          <div class="raiting-icon-wrap">
+            <ion-icon class="raiting-icon" name="star-half-outline"></ion-icon>
+          </div>
+        </div>
+        <div class="c-list-item__info"><strong>Position:</strong> Restaurant Manager</div>
+      </div>
+      <ion-buttons slot="end" class="c-list-item__buttons">
+        <ion-button routerLink="/chat">
+          <ion-icon slot="icon-only" name="mail-outline"></ion-icon>
+        </ion-button>
+        <ion-button (click)="positionApplicationActions($event)" class="btn-ellipsis-vertical">
+          <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list> -->
+
+</ion-content>

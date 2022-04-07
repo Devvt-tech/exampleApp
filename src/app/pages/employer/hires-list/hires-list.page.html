@@ -1,0 +1,81 @@
+<ion-header class="ion-no-border page-header" [ngClass]="{'hide-on-scroll': headerHideOnScroll, 'fixed-on-scroll': headerFixOnScroll}">
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="!isSearchOpened">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+
+      <ion-title class="page-header__title" mode="md" *ngIf="!isSearchOpened">Completed interviews</ion-title>
+
+      <div class="h-search" *ngIf="isSearchOpened">
+        <ion-buttons slot="start" mode="md" class="h-search__close">
+          <ion-button (click)="closeSearch()">
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-searchbar mode="ios" clearIcon="close-outline" class="h-search__input"></ion-searchbar>
+      </div>
+ 
+    <ion-buttons slot="end" mode="md" *ngIf="!isSearchOpened">
+      <div class="res-filter-wrap">
+        <div class="res-filter-count">1</div>
+        <ion-button (click)="openFilter()">
+          <ion-icon slot="icon-only" name="options"></ion-icon>
+        </ion-button>
+      </div>
+      
+      <ion-button (click)="openSearch()">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+      <ion-menu-toggle menu="candidateMenu">
+        <ion-button>
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content fullscreen="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <div class="pagehead-bg"></div>
+  
+  <div class="page-content-wrap">
+    <h5 class="page-title">Completed interviews</h5>
+
+    <div class="page-container">
+      <div class="page-list-wrap">
+        <!-- <p class="ion-text-center">You haven't hired anyone yet</p> -->
+
+        <!-- Offers list -->
+        <ion-list class="c-list" mode="md">
+          <ion-item *ngFor="let hire of hires" class="c-list-item">
+            <ion-avatar slot="start" class="c-list-item__avatar">
+              <img [src]="isCompany ? hire.candidate.image : hire.company.image">
+            </ion-avatar>
+            <div class="c-list-item__content">
+              <h5 class="c-list-item__title" (click)="toProfile(hire.id)">{{isCompany ? hire.candidate.name : hire.company.name}}</h5>
+              <div class="c-raiting-sm">
+                <app-rating [readOnly]="true" [rating]="isCompany ? hire.candidate.rating_total : hire.company.rating_total"></app-rating>
+              </div>
+              
+              <div class="c-list-item__info">{{hire.vacancy.job_name}}</div>
+              <!-- TO DO 2 years ·  -->
+              <div class="c-list-item__info-secondary">{{hire.vacancy?.city_name}}</div>
+              <div class="c-list-item__info">
+                Status: 
+                <ion-chip color="primary" class="c-list-item__status">
+                  <ion-label>{{hire.hireStatusText}}</ion-label>
+                </ion-chip>
+              </div>
+              <ion-button *ngIf="hire.hired_status === '2' && hire.can_leave_rating" size="small"  color="secondary" fill="outline" class="c-list-item__btn" (click)="leaveReview(hire)">Please submit a review</ion-button>
+              <app-hired-ask *ngIf="hire.hired_status === '3'" [offerId]="hire.id" (answerDone)="loadInfo()"></app-hired-ask>
+            </div>
+            
+          </ion-item>
+
+        </ion-list>
+        <!-- end: Offers list -->
+      </div>
+    </div>
+
+  </div>
+</ion-content>

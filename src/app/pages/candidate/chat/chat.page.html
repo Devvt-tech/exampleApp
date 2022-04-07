@@ -1,0 +1,91 @@
+<ion-header class="ion-no-border simple-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-item lines="none" class="chat-user" (click)="toProfile(recipId)">
+        <ion-avatar slot="start" class="chat-user__avatar">
+          <img [src]="chat.icon">
+        </ion-avatar>
+        <div class="chat-user__content">
+          <h5 class="chat-user__title">{{chat.name}}</h5>
+          <!-- TODO -->
+          <!-- <div class="chat-user__desc">last seen at 15:02</div> -->
+        </div>
+      </ion-item>
+    </ion-title>
+    <ion-buttons slot="end">
+      <!-- TODO -->
+      <!-- <ion-button (click)="chatMenuPopover($event)">
+        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      </ion-button> -->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true" #scrollContainer   [scrollEvents]="true" id="scroll"
+(ionScroll)="logScrolling($event)"
+>
+  <div class="chat-area">
+    <!-- TODO -->
+    <!-- <div class="chat-area-title">
+      Today
+    </div> -->
+    <ng-container *ngFor="let mess of messages">
+      <div (click)="selectedClear()" class="chat-msg-wrap">
+        <div *ngIf="mess.isSelected && mess.is_my" class="trash-wrap">
+          <ion-button (click)="removeMessage(mess)" color="secondary">
+            <ion-icon size="large" name="trash-outline"></ion-icon>
+          </ion-button>
+          <ion-button color="secondary" (click)="copyMessage($event, mess)">
+            <ion-icon  size="large" name="copy-outline"></ion-icon>
+          </ion-button>
+          
+        </div>
+        <div [ngClass]="{rightside:mess.is_my, leftside: !mess.is_my}" class="chat-msg">
+          <div ion-long-press [interval]="1500" (longPressed)="selectMessage(mess)"
+            class="msg-area status available z-depth-1" [ngClass]="{'mes-select': mess.isSelected}">
+            <div class="userpic-wrap">
+              <ion-img (click)="onClickMessage(mess)" [src]="mess.icon" alt="Emmi Derill" title="Emmi Derill" class="userpic"></ion-img>
+            </div>
+            <p [ngClass]="{unread: !markAsReadScroll && mess.is_unread}" class="msg">{{mess.text}}</p>
+          </div>
+          <div class="time">
+            <span>{{mess.prittyDate}}</span>
+            <span *ngIf="mess.is_my">me</span>
+            <span *ngIf="!mess.is_my">{{mess.name}}</span>
+          </div>
+        </div>
+        <div *ngIf="mess.isSelected && !mess.is_my" class="trash-wrap">
+          <ion-button (click)="removeMessage(mess)" color="secondary">
+            <ion-icon size="large" name="trash-outline"></ion-icon>
+          </ion-button>
+          <ion-button (click)="copyMessage($event, mess)" color="secondary">
+            <ion-icon size="large" name="copy-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </ng-container>
+
+
+  </div>
+
+</ion-content>
+
+<ion-footer class="chat-footer ion-no-border">
+  <!-- <ion-toolbar> -->
+    <form [formGroup]="form">
+      <div class="chat-new-msg">
+        <ion-textarea formControlName="text" autoGrow="true" rows="1"></ion-textarea>
+        <ion-buttons class="chat-new-msg__send">
+          <ion-button (click)="onSendClick()">
+            <ion-icon slot="icon-only" name="send-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </div>
+    </form>
+    
+  <!-- </ion-toolbar> -->
+</ion-footer>
+
